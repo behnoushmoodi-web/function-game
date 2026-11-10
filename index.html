@@ -1,385 +1,496 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>آزمایشگاه کسرها</title>
+<title>آزمایشگاه کسرها | بهنوش مودی</title>
 
 <style>
+*{box-sizing:border-box}
 
-body {
-  font-family: Tahoma, sans-serif;
-  background: #fff8e9;
-  text-align: center;
-  padding: 15px;
-  color: #35445c;
-  margin: 0;
+body{
+  margin:0;
+  padding:14px;
+  font-family:Tahoma,sans-serif;
+  background:#fff8e9;
+  color:#35445c;
+  text-align:center;
 }
 
-/* صفحه شروع */
-
-.home-box {
-  background: linear-gradient(135deg,#315c81,#55a6a0);
-  color: white;
-  padding: 45px 20px;
-  border-radius: 24px;
-  max-width: 500px;
-  margin: 80px auto;
-  box-shadow: 0 8px 25px #b9cbd0;
+button{
+  border:0;
+  border-radius:12px;
+  padding:12px 18px;
+  margin:6px;
+  font-family:Tahoma;
+  font-size:14px;
+  cursor:pointer;
+  background:#e8bd66;
+  color:#35445c;
 }
 
-.home-box h1 {
-  color: white;
-  font-size: 23px;
-  margin: 10px 0 25px;
+button:active{transform:scale(.97)}
+
+h1,h2,h3{margin:10px 0}
+
+.home,.header,.card{
+  max-width:540px;
+  margin:18px auto;
+  border-radius:22px;
+  padding:22px 15px;
 }
 
-/* سربرگ بازی */
-
-.game-header {
-  background: linear-gradient(135deg,#315c81,#55a6a0);
-  color: white;
-  padding: 15px 12px 8px;
-  border-radius: 20px;
-  max-width: 500px;
-  margin: 15px auto 20px;
-  box-shadow: 0 8px 25px #b9cbd0;
+.home{
+  margin-top:75px;
+  padding:50px 15px;
+  color:white;
+  background:linear-gradient(135deg,#315c81,#55a6a0);
+  box-shadow:0 8px 25px #c7d4d1;
 }
 
-.game-header .small-title {
-  font-size: 9px;
-  opacity: .9;
+.home h1{font-size:24px}
+
+.header{
+  background:linear-gradient(135deg,#315c81,#55a6a0);
+  color:white;
+  padding:14px;
+  margin-top:5px;
 }
 
-.game-header h1 {
-  color: white;
-  font-size: 16px;
-  margin: 10px 0;
+.header h1{font-size:17px}
+.header p{font-size:11px}
+.signature{font-size:8px;line-height:1.8;margin-top:8px}
+
+.card{
+  background:white;
+  box-shadow:0 4px 15px #e4ded2;
 }
 
-.game-header .description {
-  font-size: 10px;
-  margin: 5px 0;
+.hidden{display:none!important}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  max-width:540px;
+  margin:15px auto;
 }
 
-.game-header .emoji {
-  font-size: 15px;
-  margin: 5px 0;
+.stage{
+  background:white;
+  border-radius:17px;
+  padding:18px 8px;
+  box-shadow:0 3px 10px #e4ded2;
+  cursor:pointer;
+  border:2px solid transparent;
 }
 
-.signature {
-  font-size: 8px;
-  line-height: 1.8;
-  margin-top: 8px;
+.stage:active{border-color:#55a6a0}
+.stage .icon{font-size:28px}
+.stage h3{font-size:14px}
+.stage p{font-size:10px;color:#777;margin:5px}
+
+.stats{
+  display:flex;
+  justify-content:space-around;
+  gap:5px;
+  flex-wrap:wrap;
+  margin:12px auto;
+  max-width:540px;
 }
 
-/* کارت بازی */
-
-.card {
-  background: white;
-  border-radius: 20px;
-  padding: 20px 10px;
-  margin: 15px auto;
-  max-width: 500px;
-  box-shadow: 0 4px 15px #ddd;
+.stat{
+  background:#e8f1ef;
+  border-radius:12px;
+  padding:10px;
+  flex:1;
+  min-width:90px;
+  font-size:12px;
 }
 
-.fractions {
-  display: flex;
-  justify-content: space-around;
-  gap: 10px;
+.question{
+  font-size:17px;
+  font-weight:bold;
+  line-height:2;
+  margin:15px 0;
 }
 
-.fraction {
-  background: #f0f5fa;
-  border-radius: 15px;
-  padding: 12px 5px;
-  width: 45%;
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:15px auto;
 }
 
-.number {
-  font-size: 23px;
-  font-weight: bold;
+.option{
+  background:#edf3f5;
+  border:2px solid #d8e4e8;
+  border-radius:14px;
+  padding:15px 5px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-button {
-  border: none;
-  border-radius: 12px;
-  padding: 11px 17px;
-  margin: 8px;
-  font-size: 15px;
-  cursor: pointer;
-  background: #e5b85c;
-  color: #333;
-  font-family: Tahoma, sans-serif;
+.option:disabled{cursor:default;opacity:1}
+.option.correct{background:#d8f1df;border-color:#53a66b}
+.option.wrong{background:#ffe1dc;border-color:#dc8073}
+
+.fraction{
+  display:inline-flex;
+  flex-direction:column;
+  vertical-align:middle;
+  align-items:center;
+  margin:0 5px;
+  font-size:22px;
+  font-weight:bold;
+  min-width:28px;
 }
 
-button:hover {
-  background: #f0ce85;
+.fraction .line{
+  width:100%;
+  border-top:2px solid #35445c;
+  margin:3px 0;
 }
 
-.shape {
-  display: flex;
-  height: 35px;
-  margin: 15px auto;
-  direction: ltr;
+.bars{
+  display:flex;
+  direction:ltr;
+  height:27px;
+  max-width:220px;
+  margin:8px auto;
 }
 
-.part {
-  border: 1px solid white;
-  background: #d9e3ed;
-  flex: 1;
+.bar{
+  flex:1;
+  background:#e6e9ed;
+  border:1px solid white;
 }
 
-.filled {
-  background: #55a6a0;
+.bar.fill{background:#55a6a0}
+
+#feedback{
+  min-height:45px;
+  padding:10px;
+  margin:10px 0;
+  border-radius:12px;
+  font-size:13px;
+  line-height:1.8;
 }
 
-#message {
-  font-size: 15px;
-  font-weight: bold;
-  margin: 15px;
-  min-height: 25px;
+.good{background:#e0f3e4;color:#287440}
+.bad{background:#fff0e8;color:#a64d39}
+
+#nextBtn{background:#55a6a0;color:white}
+.backBtn{background:#e4ebef}
+
+.progress{
+  height:9px;
+  background:#e9e9e9;
+  border-radius:20px;
+  overflow:hidden;
+  margin:12px auto;
 }
 
-.home-button {
-  background: #dce9ef;
-  font-size: 12px;
+.progress div{
+  height:100%;
+  background:#55a6a0;
+  width:0;
+  transition:.3s;
 }
 
-/* نمایش در گوشی */
-
-@media (max-width: 400px) {
-  body {
-    padding: 10px;
-  }
-
-  .card {
-    padding: 15px 5px;
-  }
-
-  .number {
-    font-size: 21px;
-  }
-
-  button {
-    font-size: 13px;
-    padding: 10px 12px;
-  }
+@media(max-width:380px){
+  body{padding:8px}
+  .home{margin-top:45px}
+  .stage{padding:13px 5px}
+  .option{font-size:16px}
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- صفحه اصلی -->
+<!-- صفحه شروع -->
 
-<div id="homeScreen" class="home-box">
-
+<div id="homeScreen" class="home">
   <h1>آزمایشگاه کسرها</h1>
-
-  <button onclick="showGame()">
-    شروع بازی 🚀
-  </button>
-
+  <button onclick="showMenu()">شروع بازی 🚀</button>
 </div>
 
+<!-- سربرگ -->
 
-<!-- سربرگ بازی -->
-
-<div id="gameHeader" class="game-header" style="display:none;">
-
-  <div class="small-title">
-    ✦ محیط تعاملی یادگیری ریاضی | پایه پنجم ✦
-  </div>
-
+<div id="gameHeader" class="header hidden">
   <h1>آزمایشگاه کسرها</h1>
-
-  <div class="description">
-    کشف دنیای کسرها با بازی، تجربه و تفکر
-  </div>
-
-  <div class="emoji">
-    🧩 🔢 🎨
-  </div>
-
+  <p>محیط تعاملی یادگیری ریاضی | پایه پنجم</p>
+  <div>🧩 🔢 🎨</div>
   <div class="signature">
     بهنوش مودی<br>
     گروه تخصصی آموزگاران پایه پنجم رضویه
   </div>
-
 </div>
 
+<!-- منوی مراحل -->
 
-<!-- محیط بازی -->
+<div id="menuScreen" class="hidden">
 
-<div id="gameScreen" style="display:none;">
+  <div class="stats">
+    <div class="stat">⭐ امتیاز<br><b id="totalScore">۰</b></div>
+    <div class="stat">📝 پاسخ درست<br><b id="totalCorrect">۰</b></div>
+    <div class="stat">🎯 تعداد سؤال<br><b id="totalQuestions">۰</b></div>
+  </div>
+
+  <div class="card">
+    <h2>کدام بخش را انتخاب می‌کنی؟</h2>
+    <p>یک آزمایش را انتخاب کن و شروع کن!</p>
+  </div>
+
+  <div class="menu-grid">
+
+    <div class="stage" onclick="startStage('compare')">
+      <div class="icon">⚖️</div>
+      <h3>مقایسه کسرها</h3>
+      <p>بزرگ‌تر یا کوچک‌تر؟</p>
+    </div>
+
+    <div class="stage" onclick="startStage('equal')">
+      <div class="icon">🟰</div>
+      <h3>کسرهای مساوی</h3>
+      <p>کسرهای هم‌ارز را پیدا کن</p>
+    </div>
+
+    <div class="stage" onclick="startStage('simplify')">
+      <div class="icon">✂️</div>
+      <h3>ساده‌کردن کسر</h3>
+      <p>کسر را ساده کن</p>
+    </div>
+
+    <div class="stage" onclick="startStage('add')">
+      <div class="icon">➕</div>
+      <h3>جمع کسرها</h3>
+      <p>کسرها را با هم جمع کن</p>
+    </div>
+
+    <div class="stage" onclick="startStage('subtract')">
+      <div class="icon">➖</div>
+      <h3>تفریق کسرها</h3>
+      <p>کسرها را از هم کم کن</p>
+    </div>
+
+  </div>
+
+  <button class="backBtn" onclick="showHome()">بازگشت به صفحه اصلی</button>
+</div>
+
+<!-- صفحه بازی -->
+
+<div id="playScreen" class="hidden">
+
+  <div class="stats">
+    <div class="stat">⭐ امتیاز<br><b id="score">۰</b></div>
+    <div class="stat">📝 پاسخ درست<br><b id="correct">۰</b></div>
+    <div class="stat">سؤال<br><b id="questionNo">۱</b></div>
+  </div>
+
+  <div class="progress">
+    <div id="progressBar"></div>
+  </div>
 
   <div class="card">
 
-    <div class="fractions">
+    <h2 id="stageTitle"></h2>
 
-      <div class="fraction">
+    <div id="question" class="question"></div>
 
-        <div id="fraction1" class="number"></div>
+    <div id="visual"></div>
 
-        <div id="shape1" class="shape"></div>
+    <div id="options" class="options"></div>
 
-        <button onclick="check(1)">
-          کسر اول
-        </button>
+    <div id="feedback"></div>
 
-      </div>
-
-
-      <div class="fraction">
-
-        <div id="fraction2" class="number"></div>
-
-        <div id="shape2" class="shape"></div>
-
-        <button onclick="check(2)">
-          کسر دوم
-        </button>
-
-      </div>
-
-    </div>
-
-    <div id="message"></div>
-
-    <button onclick="newQuestion()">
-      سؤال بعدی 🔄
+    <button id="nextBtn" class="hidden" onclick="newQuestion()">
+      سؤال بعدی ←
     </button>
 
     <br>
 
-    <button class="home-button" onclick="showHome()">
-      بازگشت به صفحه اصلی
+    <button class="backBtn" onclick="showMenu()">
+      بازگشت به مراحل
     </button>
 
   </div>
-
 </div>
-
 
 <script>
 
-let a, b, c, d;
+/* ابزارهای عمومی */
+
+const fa = n => Number(n).toLocaleString("fa-IR");
+
+function fraction(n,d){
+  return `<span class="fraction"><span>${fa(n)}</span><span class="line"></span><span>${fa(d)}</span></span>`;
+}
+
+function gcd(a,b){
+  return b===0 ? a : gcd(b,a%b);
+}
+
+function random(min,max){
+  return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function shuffle(arr){
+  return arr.sort(()=>Math.random()-.5);
+}
+
+function show(id){
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function hide(id){
+  document.getElementById(id).classList.add("hidden");
+}
 
 
-/* ساخت کسر تصادفی */
+/* وضعیت بازی */
 
-function makeFraction() {
+let score=0;
+let correct=0;
+let questions=0;
+let stage="";
+let answer="";
+let answered=false;
+let stageQuestions=0;
 
-  let denominator = Math.floor(Math.random() * 7) + 3;
+const stageNames={
+  compare:"مقایسه کسرها",
+  equal:"کسرهای مساوی",
+  simplify:"ساده‌کردن کسر",
+  add:"جمع کسرها",
+  subtract:"تفریق کسرها"
+};
 
-  let numerator = Math.floor(
-    Math.random() * (denominator - 1)
-  ) + 1;
+function updateStats(){
 
-  return [numerator, denominator];
+  document.getElementById("totalScore").innerText=fa(score);
+  document.getElementById("totalCorrect").innerText=fa(correct);
+  document.getElementById("totalQuestions").innerText=fa(questions);
+
+  document.getElementById("score").innerText=fa(score);
+  document.getElementById("correct").innerText=fa(correct);
+  document.getElementById("questionNo").innerText=fa(stageQuestions);
 
 }
 
 
-/* رسم شکل کسر */
+/* جابه‌جایی صفحه‌ها */
 
-function drawShape(id, n, d) {
+function showHome(){
 
-  let box = document.getElementById(id);
-
-  box.innerHTML = "";
-
-  for(let i = 0; i < d; i++) {
-
-    let part = document.createElement("div");
-
-    part.className = "part" + (i < n ? " filled" : "");
-
-    box.appendChild(part);
-
-  }
+  hide("gameHeader");
+  hide("menuScreen");
+  hide("playScreen");
+  show("homeScreen");
 
 }
 
+function showMenu(){
 
-/* تولید سؤال جدید */
+  hide("homeScreen");
+  hide("playScreen");
+  show("gameHeader");
+  show("menuScreen");
 
-function newQuestion() {
-
-  do {
-
-    [a,b] = makeFraction();
-
-    [c,d] = makeFraction();
-
-  } while(a/b === c/d);
-
-
-  document.getElementById("fraction1").innerHTML =
-    a + "<hr>" + b;
-
-  document.getElementById("fraction2").innerHTML =
-    c + "<hr>" + d;
-
-
-  drawShape("shape1", a, b);
-
-  drawShape("shape2", c, d);
-
-
-  document.getElementById("message").innerHTML = "";
+  updateStats();
 
 }
 
+function startStage(s){
 
-/* بررسی پاسخ */
+  stage=s;
+  stageQuestions=0;
 
-function check(choice) {
+  hide("menuScreen");
+  show("playScreen");
 
-  let correct = a/b > c/d ? 1 : 2;
-
-  document.getElementById("message").innerHTML =
-
-    choice === correct
-    ? "🌟 آفرین! پاسخ درست است."
-    : "دوباره فکر کن! پاسخ درست نیست.";
-
-}
-
-
-/* ورود به بازی */
-
-function showGame() {
-
-  document.getElementById("homeScreen").style.display = "none";
-
-  document.getElementById("gameHeader").style.display = "block";
-
-  document.getElementById("gameScreen").style.display = "block";
+  document.getElementById("stageTitle").innerText=stageNames[stage];
 
   newQuestion();
 
 }
 
 
-/* بازگشت به صفحه اصلی */
+/* نمایش گزینه‌ها */
 
-function showHome() {
+function setOptions(options,correctAnswer){
 
-  document.getElementById("homeScreen").style.display = "block";
+  answer=String(correctAnswer);
+  answered=false;
 
-  document.getElementById("gameHeader").style.display = "none";
+  const box=document.getElementById("options");
+  box.innerHTML="";
 
-  document.getElementById("gameScreen").style.display = "none";
+  shuffle(options).forEach(item=>{
+
+    let btn=document.createElement("button");
+
+    btn.className="option";
+    btn.innerHTML=item.label;
+    btn.dataset.value=String(item.value);
+
+    btn.onclick=()=>checkAnswer(btn);
+
+    box.appendChild(btn);
+
+  });
+
+  document.getElementById("feedback").innerHTML="";
+  document.getElementById("feedback").className="";
+  hide("nextBtn");
 
 }
 
-</script>
 
-</body>
-</html>
+/* بررسی پاسخ */
+
+function checkAnswer(btn){
+
+  if(answered)return;
+
+  answered=true;
+  questions++;
+  stageQuestions++;
+
+  const feedback=document.getElementById("feedback");
+  const buttons=document.querySelectorAll(".option");
+
+  buttons.forEach(b=>{
+
+    b.disabled=true;
+
+    if(b.dataset.value===answer){
+      b.classList.add("correct");
+    }
+
+  });
+
+  if(btn.dataset.value===answer){
+
+    score+=10;
+    correct++;
+
+    feedback.innerHTML="🌟 آفرین! پاسخ درست است. ۱۰ امتیاز گرفتی.";
+    feedback.className="good";
+
+  }else{
+
+    btn.classList.add("wrong");
+
+    feedback.innerHTML="این بار درست نبود. پاسخ صحیح با رنگ سبز مشخص شده است. دوباره تلاش کن!";
+    feedback.className="bad";
+
+  }
+
+  updateStats();
+
+  document.getElementById("progressBar").style.width=
+    Math.min(stage
