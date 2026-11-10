@@ -14,9 +14,7 @@ body {
   color: #35445c;
 }
 
-h1 {
-  color: #315c81;
-}
+h1 { color: #315c81; }
 
 .card {
   background: white;
@@ -56,9 +54,7 @@ button {
   color: #333;
 }
 
-button:hover {
-  background: #f0ce85;
-}
+button:hover { background: #f0ce85; }
 
 .shape {
   display: flex;
@@ -73,9 +69,7 @@ button:hover {
   flex: 1;
 }
 
-.filled {
-  background: #55a6a0;
-}
+.filled { background: #55a6a0; }
 
 #message {
   font-size: 20px;
@@ -92,26 +86,26 @@ button:hover {
 <div style="
 background:linear-gradient(135deg,#315c81,#55a6a0);
 color:white;
-padding:28px 18px;
-border-radius:24px;
+padding:18px 14px;
+border-radius:20px;
 max-width:650px;
-margin:20px auto 30px;
-box-shadow:0 8px 25px #b9cbd0;
+margin:12px auto 22px;
+box-shadow:0 5px 16px #b9cbd0;
 ">
 
-  <div style="font-size:13px;opacity:.9;">
+  <div style="font-size:11px;opacity:.9;">
     ✦ محیط تعاملی یادگیری ریاضی | پایه پنجم ✦
   </div>
 
-  <h1 style="color:white;font-size:24px;margin:14px 0;">
+  <h1 style="color:white;font-size:20px;margin:9px 0;">
     آزمایشگاه کسرها
   </h1>
 
-  <p style="font-size:14px;line-height:2;margin:8px 0;">
+  <p style="font-size:12px;line-height:1.8;margin:5px 0;">
     کشف دنیای کسرها با بازی، تجربه و تفکر
   </p>
 
-  <div style="font-size:23px;margin-top:10px;">
+  <div style="font-size:18px;margin-top:5px;">
     🧩 🔢 🎨
   </div>
 
@@ -120,7 +114,6 @@ box-shadow:0 8px 25px #b9cbd0;
 <!-- بخش بازی -->
 
 <div class="card">
-
   <div class="fractions">
 
     <div class="fraction">
@@ -138,12 +131,8 @@ box-shadow:0 8px 25px #b9cbd0;
   </div>
 
   <div id="message"></div>
-
   <button onclick="newQuestion()">سؤال بعدی 🔄</button>
-
 </div>
-
-<!-- بخش برنامه بازی -->
 
 <script>
 let a, b, c, d;
@@ -191,8 +180,6 @@ function check(choice) {
 
 newQuestion();
 </script>
-
-<!-- امضای سازنده -->
 
 <footer style="
 text-align:center;
