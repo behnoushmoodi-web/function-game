@@ -20,331 +20,387 @@ body{
 button{
   border:0;
   border-radius:12px;
-  padding:11px 16px;
-  margin:6px;
-  font-family:Tahoma;
+  padding:11px 17px;
+  margin:5px;
+  font-family:inherit;
   font-size:13px;
   cursor:pointer;
-  background:#e8bd66;
+  background:#e5b85c;
   color:#35445c;
 }
 
-button:disabled{cursor:default}
-.hidden{display:none!important}
+button:active{transform:scale(.97)}
+button:disabled{opacity:.7;cursor:not-allowed}
 
-.home,.header,.card{
-  max-width:540px;
-  margin:16px auto;
+.home-box,.card{
+  max-width:600px;
+  margin:18px auto;
+  padding:20px;
+  background:white;
   border-radius:20px;
+  box-shadow:0 4px 15px #ddd;
 }
 
-.home{
-  margin-top:75px;
-  padding:45px 15px;
-  color:white;
-  background:linear-gradient(135deg,#315c81,#55a6a0);
-  box-shadow:0 8px 25px #c7d4d1;
-}
-
-.home h1{font-size:23px;margin-bottom:24px}
-
-.header{
+.home-box{
+  margin-top:65px;
+  padding:35px 18px;
   background:linear-gradient(135deg,#315c81,#55a6a0);
   color:white;
-  padding:13px;
 }
 
-.header h1{font-size:17px;margin:7px}
-.header p{font-size:10px;margin:7px}
-
-.signature{
-  font-size:8px;
-  line-height:1.8;
-  margin-top:8px;
+.home-box h1{
+  color:white;
+  font-size:22px;
+  margin:15px 0 8px;
 }
 
-.card{
-  background:white;
-  padding:18px 12px;
-  box-shadow:0 4px 15px #e4ded2;
+.credit{
+  font-size:12px;
+  line-height:2.5;
+  margin:12px 0 22px;
+  color:white;
 }
 
-.menu-title{font-size:17px;margin:15px}
-
-.menu-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  max-width:540px;
-  margin:15px auto;
+#menuScreen h3{
+  font-size:16px;
 }
-
-.stage{
-  background:white;
-  border-radius:16px;
-  padding:17px 7px;
-  box-shadow:0 3px 12px #e4ded2;
-  border:2px solid transparent;
-  cursor:pointer;
-}
-
-.stage:active{border-color:#55a6a0}
-.stage .icon{font-size:27px}
-.stage h3{font-size:13px;margin:9px 0}
-.stage p{font-size:10px;color:#777;margin:5px}
 
 .stats{
   display:flex;
-  justify-content:space-around;
-  gap:6px;
-  max-width:540px;
+  justify-content:center;
+  gap:9px;
+  flex-wrap:wrap;
   margin:12px auto;
 }
 
 .stat{
-  flex:1;
-  background:#e8f1ef;
+  background:#f0f5fa;
+  padding:9px 13px;
   border-radius:12px;
-  padding:10px 4px;
-  font-size:11px;
+  font-size:12px;
+}
+
+.stage-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:18px;
+}
+
+.stage-btn{
+  min-height:80px;
+  background:#f0f5fa;
+  border:2px solid #e3edf2;
+  font-size:12px;
   line-height:2;
 }
 
-.stat b{font-size:15px}
+.stage-btn span{
+  display:block;
+  font-size:22px;
+}
 
-.question{
+#stageName{
   font-size:16px;
+  color:#315c81;
+}
+
+#questionTitle{
+  font-size:14px;
+  color:#315c81;
+  margin:12px 0 18px;
+  line-height:2;
+}
+
+#question{
+  font-size:18px;
   font-weight:bold;
-  line-height:2.3;
+  line-height:2.2;
   margin:15px 0;
 }
 
-.options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin:15px auto;
+.fractions{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin:15px 0;
 }
 
-.option{
-  background:#edf3f5;
-  border:2px solid #d8e4e8;
-  border-radius:13px;
-  padding:13px 4px;
-  font-size:17px;
-  min-height:55px;
-  margin:0;
+.fraction-card{
+  background:#f0f5fa;
+  border-radius:15px;
+  padding:13px;
+  min-width:110px;
 }
-
-.option:disabled{opacity:1}
-.option.correct{background:#d8f1df;border-color:#53a66b}
-.option.wrong{background:#ffe1dc;border-color:#dc8073}
 
 .fraction{
   display:inline-flex;
   flex-direction:column;
   align-items:center;
   vertical-align:middle;
-  min-width:27px;
-  margin:0 4px;
-  font-size:19px;
+  font-size:17px;
   font-weight:bold;
+  min-width:28px;
   line-height:1.5;
+  margin:0 4px;
 }
 
 .fraction .line{
   width:100%;
-  border-top:2px solid #35445c;
+  min-width:25px;
+  height:2px;
+  background:#35445c;
+  margin:2px 0;
 }
 
-.bars{
+.shape{
   display:flex;
   direction:ltr;
   height:25px;
-  max-width:190px;
-  margin:8px auto;
+  margin:12px auto 5px;
+  max-width:180px;
 }
 
-.bar{
+.part{
   flex:1;
-  background:#e6e9ed;
   border:1px solid white;
+  background:#d9e3ed;
 }
 
-.bar.fill{background:#55a6a0}
+.filled{background:#55a6a0}
 
-#feedback{
-  min-height:40px;
-  padding:9px;
-  margin:10px 0;
-  border-radius:11px;
+.options{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:18px 0;
+}
+
+.option{
+  background:#eaf1f6;
+  min-width:75px;
+  border:2px solid #d9e3ed;
+  font-size:14px;
+}
+
+.option.correct{
+  background:#d8f2e3;
+  border-color:#55a878;
+}
+
+.option.wrong{
+  background:#ffe0dc;
+  border-color:#dc8175;
+}
+
+#message{
+  font-size:13px;
+  font-weight:bold;
+  margin:15px 0;
+  line-height:2;
+}
+
+.explanation{
+  display:none;
+  text-align:right;
+  background:#fff8e9;
+  border-right:4px solid #e5b85c;
+  border-radius:12px;
+  padding:14px;
+  margin:15px 0;
   font-size:12px;
-  line-height:1.9;
+  line-height:2.3;
 }
 
-.good{background:#e0f3e4;color:#287440}
-.bad{background:#fff0e8;color:#a64d39}
+.explanation h3{
+  color:#315c81;
+  margin:0 0 8px;
+  font-size:14px;
+}
 
-#nextBtn{background:#55a6a0;color:white}
+.explanation .step{
+  margin:5px 0;
+}
 
-.backBtn{
-  background:#e4ebef;
-  font-size:11px;
+.explanation .answer{
+  background:#e0f1ee;
+  padding:8px;
+  border-radius:9px;
+  margin-top:10px;
+  font-weight:bold;
 }
 
 .progress{
-  height:8px;
-  background:#e9e9e9;
-  border-radius:20px;
+  height:7px;
+  background:#e9edf1;
+  border-radius:10px;
   overflow:hidden;
-  max-width:540px;
-  margin:12px auto;
+  margin:13px 0;
 }
 
-.progress div{
+#progressBar{
   height:100%;
-  width:0;
+  width:0%;
   background:#55a6a0;
   transition:.3s;
 }
 
-@media(max-width:380px){
+.hidden{display:none!important}
+.secondary{background:#d9e3ed}
+
+@media(max-width:400px){
   body{padding:8px}
-  .home{margin-top:45px}
-  .stage{padding:13px 4px}
-  .option{font-size:15px}
+  .home-box,.card{padding:14px}
+  .stage-grid{gap:7px}
+  .stage-btn{font-size:11px}
+  #question{font-size:16px}
+  .fraction-card{min-width:95px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- صفحه شروع -->
+<!-- صفحه آغازین؛ مشخصات فقط در همین صفحه هستند -->
+<div id="homeScreen" class="home-box">
+  <div style="font-size:35px">🧩 🔢 🎨</div>
 
-<div id="homeScreen" class="home">
   <h1>آزمایشگاه کسرها</h1>
-  <button onclick="showMenu()">شروع بازی 🚀</button>
-</div>
 
-<!-- سربرگ -->
-
-<div id="gameHeader" class="header hidden">
-  <h1>آزمایشگاه کسرها</h1>
-  <p>محیط تعاملی یادگیری ریاضی | پایه پنجم</p>
-  <div>🧩 🔢 🎨</div>
-  <div class="signature">
-    بهنوش مودی<br>
-    گروه تخصصی آموزگاران پایه پنجم رضویه
+  <div class="credit">
+    بهنوش مودی
+    <br>
+    گروه تخصصی آموزشگران پایه پنجم رضویه
   </div>
+
+  <button onclick="showMenu()" style="font-weight:bold">
+    شروع بازی 🚀
+  </button>
 </div>
 
 <!-- منوی مراحل -->
+<div id="menuScreen" class="card hidden">
 
-<div id="menuScreen" class="hidden">
+  <h3>🌟 یک مرحله را انتخاب کن</h3>
 
   <div class="stats">
-    <div class="stat">
-      ⭐ امتیاز<br><b id="totalScore">۰</b>
-    </div>
-    <div class="stat">
-      📝 پاسخ درست<br><b id="totalCorrect">۰</b>
-    </div>
-    <div class="stat">
-      🎯 سؤال‌ها<br><b id="totalQuestions">۰</b>
-    </div>
+    <div class="stat">⭐ امتیاز: <b id="totalScore">۰</b></div>
+    <div class="stat">✅ پاسخ درست: <b id="totalCorrect">۰</b></div>
   </div>
 
-  <div class="card">
-    <h2 class="menu-title">یک مرحله را انتخاب کن</h2>
-    <div id="levelText">🌱 سطح: کاوشگر کسرها</div>
-  </div>
+  <div class="stage-grid">
 
-  <div class="menu-grid">
+    <button class="stage-btn" onclick="startStage('compare')">
+      <span>⚖️</span>
+      مقایسه کسرها
+    </button>
 
-    <div class="stage" onclick="startStage('compare')">
-      <div class="icon">⚖️</div>
-      <h3>مقایسه کسرها</h3>
-      <p>کدام کسر بزرگ‌تر است؟</p>
-    </div>
+    <button class="stage-btn" onclick="startStage('equal')">
+      <span>🟰</span>
+      کسرهای مساوی
+    </button>
 
-    <div class="stage" onclick="startStage('equal')">
-      <div class="icon">🟰</div>
-      <h3>کسرهای مساوی</h3>
-      <p>کسرهای هم‌ارز را پیدا کن</p>
-    </div>
+    <button class="stage-btn" onclick="startStage('simplify')">
+      <span>✂️</span>
+      ساده کردن کسرها
+    </button>
 
-    <div class="stage" onclick="startStage('simplify')">
-      <div class="icon">✂️</div>
-      <h3>ساده‌کردن کسر</h3>
-      <p>کسر را ساده کن</p>
-    </div>
+    <button class="stage-btn" onclick="startStage('add')">
+      <span>➕</span>
+      جمع کسرها
+    </button>
 
-    <div class="stage" onclick="startStage('add')">
-      <div class="icon">➕</div>
-      <h3>جمع کسرها</h3>
-      <p>کسرها را جمع کن</p>
-    </div>
-
-    <div class="stage" onclick="startStage('subtract')">
-      <div class="icon">➖</div>
-      <h3>تفریق کسرها</h3>
-      <p>کسرها را از هم کم کن</p>
-    </div>
+    <button class="stage-btn" onclick="startStage('subtract')">
+      <span>➖</span>
+      تفریق کسرها
+    </button>
 
   </div>
 
-  <button class="backBtn" onclick="showHome()">
-    بازگشت به صفحه اصلی
+  <button class="secondary" onclick="showHome()">
+    صفحه شروع
   </button>
-
 </div>
 
-<!-- محیط بازی -->
+<!-- صفحه بازی -->
+<div id="gameScreen" class="card hidden">
 
-<div id="playScreen" class="hidden">
+  <h3 id="stageName"></h3>
 
   <div class="stats">
-    <div class="stat">⭐ امتیاز<br><b id="score">۰</b></div>
-    <div class="stat">📝 پاسخ درست<br><b id="correct">۰</b></div>
-    <div class="stat">سؤال<br><b id="questionNo">۱</b></div>
+    <div class="stat">⭐ امتیاز: <b id="score">۰</b></div>
+    <div class="stat">✅ درست: <b id="correctCount">۰</b></div>
+    <div class="stat">📝 سؤال: <b id="questionCount">۱</b></div>
   </div>
 
   <div class="progress">
     <div id="progressBar"></div>
   </div>
 
-  <div class="card">
+  <div id="questionTitle"></div>
+  <div id="question"></div>
+  <div id="visuals"></div>
+  <div id="options" class="options"></div>
 
-    <h2 id="stageTitle"></h2>
+  <div id="message"></div>
 
-    <div id="question" class="question"></div>
-
-    <div id="visual"></div>
-
-    <div id="options" class="options"></div>
-
-    <div id="feedback"></div>
-
-    <button id="nextBtn" class="hidden" onclick="newQuestion()">
-      سؤال بعدی ←
-    </button>
-
-    <br>
-
-    <button class="backBtn" onclick="showMenu()">
-      بازگشت به مراحل
-    </button>
-
+  <div id="explanation" class="explanation">
+    <h3>💡 چطور حل کردیم؟</h3>
+    <div id="solution"></div>
   </div>
+
+  <button id="nextBtn" class="hidden" onclick="newQuestion()">
+    سؤال بعدی 🔄
+  </button>
+
+  <br>
+
+  <button class="secondary" onclick="showMenu()">
+    بازگشت به مراحل
+  </button>
+
 </div>
 
 <script>
 
-/* ابزارهای عمومی */
+let totalScore=0;
+let totalCorrect=0;
 
-const fa = n => Number(n).toLocaleString("fa-IR");
+let stage="";
+let stageQuestions=0;
+let stageCorrect=0;
+let answered=false;
+let currentAnswer=null;
 
-function fraction(n,d){
+const names={
+  compare:"مقایسه کسرها",
+  equal:"کسرهای مساوی",
+  simplify:"ساده کردن کسرها",
+  add:"جمع کسرها",
+  subtract:"تفریق کسرها"
+};
+
+const fa=n=>Number(n).toLocaleString("fa-IR");
+
+function gcd(a,b){
+  a=Math.abs(a);
+  b=Math.abs(b);
+  while(b){
+    let t=b;
+    b=a%b;
+    a=t;
+  }
+  return a||1;
+}
+
+function simplify(n,d){
+  let g=gcd(n,d);
+  return [n/g,d/g];
+}
+
+function frac(n,d){
   return `<span class="fraction">
     <span>${fa(n)}</span>
     <span class="line"></span>
@@ -352,295 +408,192 @@ function fraction(n,d){
   </span>`;
 }
 
-function gcd(a,b){
-  a=Math.abs(a);
-  b=Math.abs(b);
-
-  while(b){
-    let t=b;
-    b=a%b;
-    a=t;
-  }
-
-  return a||1;
-}
-
-function simplify(n,d){
-  let g=gcd(n,d);
-  n/=g;
-  d/=g;
-
-  if(d<0){
-    n=-n;
-    d=-d;
-  }
-
-  return [n,d];
-}
-
-function random(min,max){
+function rand(min,max){
   return Math.floor(Math.random()*(max-min+1))+min;
 }
 
 function shuffle(arr){
   for(let i=arr.length-1;i>0;i--){
-    let j=random(0,i);
+    let j=Math.floor(Math.random()*(i+1));
     [arr[i],arr[j]]=[arr[j],arr[i]];
   }
   return arr;
 }
 
-function key(n,d){
-  let s=simplify(n,d);
-  return s[0]+"/"+s[1];
+function updateStats(){
+
+  document.getElementById("totalScore").textContent=fa(totalScore);
+  document.getElementById("totalCorrect").textContent=fa(totalCorrect);
+
+  document.getElementById("score").textContent=fa(totalScore);
+  document.getElementById("correctCount").textContent=fa(stageCorrect);
+  document.getElementById("questionCount").textContent=fa(stageQuestions);
+
+  document.getElementById("progressBar").style.width=
+    Math.min(stageQuestions*10,100)+"%";
 }
 
-function drawBar(n,d){
-  let html='<div class="bars">';
-
-  for(let i=0;i<d;i++){
-    html+=`<div class="bar ${i<n?'fill':''}"></div>`;
-  }
-
-  return html+'</div>';
-}
-
-
-/* ساخت چهار گزینه متفاوت */
-
-function makeChoices(n,d,displayN=n,displayD=d){
-
-  const correctKey=key(n,d);
-
-  let choices=[{
-    value:correctKey,
-    label:fraction(displayN,displayD)
-  }];
-
-  let used=new Set([correctKey]);
-  let candidates=[];
-
-  for(let y=2;y<=20;y++){
-    for(let x=0;x<=30;x++){
-
-      let k=key(x,y);
-
-      if(used.has(k))continue;
-
-      used.add(k);
-
-      candidates.push({
-        value:k,
-        label:fraction(x,y)
-      });
-
-    }
-  }
-
-  shuffle(candidates);
-
-  choices.push(...candidates.slice(0,3));
-
-  return shuffle(choices);
-}
-
-
-/* وضعیت بازی */
-
-let score=0;
-let correct=0;
-let questions=0;
-let stage="";
-let answer="";
-let answered=false;
-let stageQuestions=0;
-
-const stageNames={
-  compare:"مقایسه کسرها",
-  equal:"کسرهای مساوی",
-  simplify:"ساده‌کردن کسرها",
-  add:"جمع کسرها",
-  subtract:"تفریق کسرها"
-};
-
-
-/* نمایش صفحه‌ها */
-
-function show(id){
-  document.getElementById(id).classList.remove("hidden");
-}
-
-function hide(id){
-  document.getElementById(id).classList.add("hidden");
+function hideAll(){
+  ["homeScreen","menuScreen","gameScreen"].forEach(id=>{
+    document.getElementById(id).classList.add("hidden");
+  });
 }
 
 function showHome(){
-  hide("gameHeader");
-  hide("menuScreen");
-  hide("playScreen");
-  show("homeScreen");
+  hideAll();
+  document.getElementById("homeScreen").classList.remove("hidden");
 }
 
 function showMenu(){
-  hide("homeScreen");
-  hide("playScreen");
-  show("gameHeader");
-  show("menuScreen");
+  hideAll();
+  document.getElementById("menuScreen").classList.remove("hidden");
   updateStats();
 }
 
-
-/* سطح‌بندی */
-
-function getLevel(){
-
-  if(score>=300)return "🏆 استاد کسرها";
-  if(score>=150)return "🌟 ریاضی‌دان کوچک";
-  if(score>=50)return "🚀 کاوشگر پیشرفته";
-
-  return "🌱 کاوشگر کسرها";
-}
-
-function updateStats(){
-
-  document.getElementById("totalScore").innerText=fa(score);
-  document.getElementById("totalCorrect").innerText=fa(correct);
-  document.getElementById("totalQuestions").innerText=fa(questions);
-
-  document.getElementById("score").innerText=fa(score);
-  document.getElementById("correct").innerText=fa(correct);
-
-  document.getElementById("questionNo").innerText=
-    fa(stageQuestions+1);
-
-  document.getElementById("levelText").innerText=getLevel();
-}
-
-
-/* ورود به مرحله */
-
 function startStage(s){
-
   stage=s;
   stageQuestions=0;
+  stageCorrect=0;
 
-  hide("menuScreen");
-  show("playScreen");
+  hideAll();
 
-  document.getElementById("stageTitle").innerText=
-    stageNames[stage];
-
-  document.getElementById("progressBar").style.width="0%";
+  document.getElementById("gameScreen").classList.remove("hidden");
+  document.getElementById("stageName").textContent=names[s];
 
   newQuestion();
 }
 
-
-/* ساخت گزینه‌ها */
-
-function setOptions(options,correctAnswer){
-
-  answer=String(correctAnswer);
-  answered=false;
-
-  const box=document.getElementById("options");
-  box.innerHTML="";
-
-  shuffle(options).forEach(item=>{
-
-    let btn=document.createElement("button");
-
-    btn.className="option";
-    btn.innerHTML=item.label;
-    btn.dataset.value=String(item.value);
-
-    btn.onclick=()=>checkAnswer(btn);
-
-    box.appendChild(btn);
-
-  });
-
-  document.getElementById("feedback").innerHTML="";
-  document.getElementById("feedback").className="";
-
-  hide("nextBtn");
+function makeShape(n,d){
+  let html="";
+  for(let i=0;i<d;i++){
+    html+=`<div class="part ${i<n?"filled":""}"></div>`;
+  }
+  return `<div class="shape">${html}</div>`;
 }
 
+function setQuestion(title,question,visuals=""){
+  document.getElementById("questionTitle").textContent=title;
+  document.getElementById("question").innerHTML=question;
+  document.getElementById("visuals").innerHTML=visuals;
+}
 
-/* بررسی پاسخ */
+/* ساخت گزینه‌های کسری با جلوگیری از گزینه‌های هم‌ارز تکراری */
+function makeFractionOptions(correct,explanation,extras=[]){
 
-function checkAnswer(btn){
+  let opts=[];
+  let used=new Set();
+
+  function addOption(n,d){
+    if(!Number.isInteger(n)||!Number.isInteger(d)||d<=0||n<0)return;
+
+    let s=simplify(n,d);
+    let key=s[0]+"/"+s[1];
+
+    if(!used.has(key)){
+      used.add(key);
+      opts.push([n,d]);
+    }
+  }
+
+  addOption(correct[0],correct[1]);
+
+  extras.forEach(x=>addOption(x[0],x[1]));
+
+  let attempts=0;
+
+  while(opts.length<4 && attempts<300){
+    attempts++;
+    addOption(rand(1,12),rand(2,12));
+  }
+
+  shuffle(opts);
+
+  currentAnswer=simplify(correct[0],correct[1]).join("/");
+
+  document.getElementById("options").innerHTML=
+    opts.map(x=>`
+      <button class="option" onclick="checkFractionAnswer(${x[0]},${x[1]},this)">
+        ${frac(x[0],x[1])}
+      </button>
+    `).join("");
+
+  prepareAnswer(explanation);
+}
+
+function prepareAnswer(explanation){
+
+  document.getElementById("explanation").style.display="none";
+  document.getElementById("solution").innerHTML=explanation;
+  document.getElementById("message").innerHTML="";
+  document.getElementById("nextBtn").classList.add("hidden");
+
+  answered=false;
+}
+
+function checkFractionAnswer(n,d,btn){
 
   if(answered)return;
-
   answered=true;
 
-  questions++;
-  stageQuestions++;
+  let result=simplify(n,d).join("/");
+  finishAnswer(result===currentAnswer,btn);
+}
 
-  const feedback=document.getElementById("feedback");
+function checkCompare(choice,btn){
 
-  const buttons=document.querySelectorAll(".option");
+  if(answered)return;
+  answered=true;
 
-  buttons.forEach(b=>{
+  finishAnswer(choice===currentAnswer,btn);
+}
 
-    b.disabled=true;
+function finishAnswer(correct,btn){
 
-    if(b.dataset.value===answer){
-      b.classList.add("correct");
-    }
+  if(correct){
+    totalScore+=10;
+    totalCorrect++;
+    stageCorrect++;
 
-  });
-
-  if(btn.dataset.value===answer){
-
-    score+=10;
-    correct++;
-
-    feedback.innerHTML=
+    document.getElementById("message").innerHTML=
       "🌟 آفرین! پاسخ درست است. ۱۰ امتیاز گرفتی.";
 
-    feedback.className="good";
+    btn.classList.add("correct");
 
   }else{
 
+    document.getElementById("message").innerHTML=
+      "🌱 اشکالی ندارد! راه‌حل را با دقت بخوان و یاد بگیر.";
+
     btn.classList.add("wrong");
-
-    feedback.innerHTML=
-      "این بار درست نبود. پاسخ صحیح با رنگ سبز مشخص شده است.";
-
-    feedback.className="bad";
-
   }
 
+  document.querySelectorAll(".option").forEach(b=>{
+    b.disabled=true;
+  });
+
+  document.getElementById("explanation").style.display="block";
+  document.getElementById("nextBtn").classList.remove("hidden");
+
   updateStats();
-
-  document.getElementById("progressBar").style.width=
-    Math.min(stageQuestions*10,100)+"%";
-
-  show("nextBtn");
 }
-
-
-/* سؤال جدید */
 
 function newQuestion(){
 
-  answered=false;
+  stageQuestions++;
+  updateStats();
 
-  document.getElementById("visual").innerHTML="";
-
-  hide("nextBtn");
+  document.getElementById("visuals").innerHTML="";
+  document.getElementById("options").innerHTML="";
+  document.getElementById("message").innerHTML="";
+  document.getElementById("explanation").style.display="none";
+  document.getElementById("nextBtn").classList.add("hidden");
 
   if(stage==="compare")questionCompare();
   if(stage==="equal")questionEqual();
   if(stage==="simplify")questionSimplify();
-  if(stage==="add")questionAdd();
-  if(stage==="subtract")questionSubtract();
-
-  updateStats();
+  if(stage==="add")questionArithmetic("add");
+  if(stage==="subtract")questionArithmetic("subtract");
 }
-
 
 /* مرحله اول: مقایسه کسرها */
 
@@ -649,159 +602,347 @@ function questionCompare(){
   let a,b,c,d;
 
   do{
-
-    b=random(2,9);
-    d=random(2,9);
-
-    a=random(1,b-1);
-    c=random(1,d-1);
-
+    b=rand(3,9);
+    d=rand(3,9);
+    a=rand(1,b-1);
+    c=rand(1,d-1);
   }while(a*d===c*b);
 
-  document.getElementById("question").innerHTML=
-    "کدام کسر بزرگ‌تر است؟";
+  let correct=a*d>c*b?1:2;
 
-  document.getElementById("visual").innerHTML=`
-    <div style="display:flex;justify-content:space-around">
-      <div>${fraction(a,b)}${drawBar(a,b)}</div>
-      <div>${fraction(c,d)}${drawBar(c,d)}</div>
-    </div>`;
+  setQuestion(
+    "کدام کسر بزرگ‌تر است؟",
+    "به شکل‌ها و کسرها دقت کن و پاسخ درست را انتخاب کن.",
+    `<div class="fractions">
 
-  let answerValue=a*d>c*b?"1":"2";
+      <div class="fraction-card">
+        ${frac(a,b)}
+        ${makeShape(a,b)}
+        <small>کسر اول</small>
+      </div>
 
-  setOptions([
-    {label:"کسر اول",value:"1"},
-    {label:"کسر دوم",value:"2"}
-  ],answerValue);
+      <div class="fraction-card">
+        ${frac(c,d)}
+        ${makeShape(c,d)}
+        <small>کسر دوم</small>
+      </div>
+
+    </div>`
+  );
+
+  currentAnswer=correct;
+  answered=false;
+
+  document.getElementById("options").innerHTML=`
+    <button class="option" onclick="checkCompare(1,this)">کسر اول</button>
+    <button class="option" onclick="checkCompare(2,this)">کسر دوم</button>
+  `;
+
+  let x=a*d;
+  let y=c*b;
+
+  let solution=`
+    <div class="step">
+      برای مقایسه، صورت هر کسر را در مخرج کسر دیگر ضرب می‌کنیم.
+    </div>
+
+    <div class="step">
+      کسر اول: ${fa(a)} × ${fa(d)} = <b>${fa(x)}</b>
+    </div>
+
+    <div class="step">
+      کسر دوم: ${fa(c)} × ${fa(b)} = <b>${fa(y)}</b>
+    </div>
+
+    <div class="step">
+      چون ${fa(x)} ${x>y?"بزرگ‌تر از":"کوچک‌تر از"} ${fa(y)} است،
+      کسر ${correct===1?"اول":"دوم"} بزرگ‌تر است.
+    </div>
+
+    <div class="answer">
+      پاسخ: کسر ${correct===1?"اول":"دوم"}
+    </div>
+  `;
+
+  prepareAnswer(solution);
 }
-
 
 /* مرحله دوم: کسرهای مساوی */
 
 function questionEqual(){
 
-  let n=random(1,5);
-  let d=random(n+1,9);
-  let k=random(2,4);
+  let n=rand(1,5);
+  let d=rand(n+1,8);
+  let k=rand(2,4);
 
   let bigN=n*k;
   let bigD=d*k;
 
-  document.getElementById("question").innerHTML=
-    `کدام کسر با ${fraction(n,d)} مساوی است؟`;
+  let solution=`
+    <div class="step">
+      برای ساختن یک کسر مساوی، صورت و مخرج را در یک عدد یکسان ضرب می‌کنیم.
+    </div>
 
-  document.getElementById("visual").innerHTML=
-    drawBar(n,d)+
-    '<div style="font-size:11px;color:#777">به مقدار قسمت رنگی توجه کن.</div>';
+    <div class="step">
+      صورت: ${fa(n)} × ${fa(k)} = ${fa(bigN)}
+    </div>
 
-  setOptions(
-    makeChoices(bigN,bigD,bigN,bigD),
-    key(bigN,bigD)
+    <div class="step">
+      مخرج: ${fa(d)} × ${fa(k)} = ${fa(bigD)}
+    </div>
+
+    <div class="answer">
+      پس ${frac(n,d)} و ${frac(bigN,bigD)} با هم مساوی‌اند.
+    </div>
+  `;
+
+  setQuestion(
+    "کسر مساوی را پیدا کن.",
+    `${frac(n,d)} معادل کدام کسر است؟`
+  );
+
+  makeFractionOptions(
+    [bigN,bigD],
+    solution,
+    [
+      [n+1,d+1],
+      [n*2,d*3],
+      [n*3,d*2]
+    ]
   );
 }
 
-
-/* مرحله سوم: ساده‌کردن */
+/* مرحله سوم: ساده کردن کسرها */
 
 function questionSimplify(){
 
-  let n=random(1,5);
-  let d=random(n+1,9);
+  let n=rand(2,8);
+  let d=rand(2,8);
+  let k=rand(2,5);
 
-  let base=simplify(n,d);
+  n*=k;
+  d*=k;
 
-  n=base[0];
-  d=base[1];
+  let [sn,sd]=simplify(n,d);
+  let g=gcd(n,d);
 
-  let k=random(2,5);
+  let solution=`
+    <div class="step">
+      برای ساده کردن کسر، صورت و مخرج را بر یک مقسوم‌علیه مشترک تقسیم می‌کنیم.
+    </div>
 
-  let bigN=n*k;
-  let bigD=d*k;
+    <div class="step">
+      بزرگ‌ترین مقسوم‌علیه مشترک ${fa(n)} و ${fa(d)} برابر ${fa(g)} است.
+    </div>
 
-  document.getElementById("question").innerHTML=
-    `کسر زیر را تا حد امکان ساده کن: <br>${fraction(bigN,bigD)}`;
+    <div class="step">
+      صورت: ${fa(n)} ÷ ${fa(g)} = ${fa(sn)}
+    </div>
 
-  setOptions(
-    makeChoices(n,d),
-    key(n,d)
+    <div class="step">
+      مخرج: ${fa(d)} ÷ ${fa(g)} = ${fa(sd)}
+    </div>
+
+    <div class="answer">
+      پاسخ ساده‌شده: ${frac(sn,sd)}
+    </div>
+  `;
+
+  setQuestion(
+    "کسر را تا حد امکان ساده کن.",
+    frac(n,d)
+  );
+
+  makeFractionOptions(
+    [sn,sd],
+    solution,
+    [
+      [sn+1,sd],
+      [sn,sd+1],
+      [n+1,d]
+    ]
   );
 }
 
+/* مرحله چهارم و پنجم: جمع و تفریق */
 
-/* مرحله چهارم: جمع */
-
-function questionAdd(){
+function questionArithmetic(type){
 
   let a,b,c,d;
+  let same=Math.random()<0.5;
 
-  if(Math.random()<0.5){
+  if(same){
 
-    b=random(3,9);
+    b=rand(3,9);
     d=b;
+    a=rand(1,b-1);
+    c=rand(1,b-1);
 
-    a=random(1,b-1);
-    c=random(1,b-1);
+    if(type==="subtract"){
+      while(a===c){
+        c=rand(1,b-1);
+      }
+    }
 
   }else{
 
-    b=random(2,6);
-    d=random(2,6);
+    b=rand(3,8);
 
-    a=random(1,b-1);
-    c=random(1,d-1);
+    do{
+      d=rand(3,9);
+    }while(d===b);
 
+    a=rand(1,b-1);
+    c=rand(1,d-1);
   }
 
-  let numerator=a*d+c*b;
-  let denominator=b*d;
-
-  let result=simplify(numerator,denominator);
-
-  document.getElementById("question").innerHTML=
-    `${fraction(a,b)} + ${fraction(c,d)} = ؟`;
-
-  setOptions(
-    makeChoices(result[0],result[1]),
-    key(result[0],result[1])
-  );
-}
-
-
-/* مرحله پنجم: تفریق */
-
-function questionSubtract(){
-
-  let a,b,c,d;
-
-  b=random(2,6);
-  d=random(2,6);
-
-  a=random(1,b-1);
-  c=random(1,d-1);
-
-  if(a*d<c*b){
+  if(type==="subtract" && a*d<c*b){
     [a,c]=[c,a];
     [b,d]=[d,b];
   }
 
-  let numerator=a*d-c*b;
-  let denominator=b*d;
+  let title=type==="add"?"جمع کسرها":"تفریق کسرها";
+  let symbol=type==="add"?"+":"−";
 
-  let result=simplify(numerator,denominator);
+  let resultN,resultD;
+  let steps="";
 
-  document.getElementById("question").innerHTML=
-    `${fraction(a,b)} − ${fraction(c,d)} = ؟`;
+  if(same){
 
-  setOptions(
-    makeChoices(result[0],result[1]),
-    key(result[0],result[1])
+    resultD=b;
+
+    if(type==="add"){
+
+      resultN=a+c;
+
+      steps=`
+        <div class="step">
+          مخرج‌ها برابرند؛ پس مخرج را همان‌طور نگه می‌داریم.
+        </div>
+
+        <div class="step">
+          صورت‌ها را جمع می‌کنیم:
+          ${fa(a)} + ${fa(c)} = ${fa(resultN)}
+        </div>
+
+        <div class="step">
+          مخرج بدون تغییر می‌ماند: ${fa(b)}
+        </div>
+      `;
+
+    }else{
+
+      resultN=a-c;
+
+      steps=`
+        <div class="step">
+          مخرج‌ها برابرند؛ پس مخرج را همان‌طور نگه می‌داریم.
+        </div>
+
+        <div class="step">
+          صورت‌ها را از هم کم می‌کنیم:
+          ${fa(a)} − ${fa(c)} = ${fa(resultN)}
+        </div>
+
+        <div class="step">
+          مخرج بدون تغییر می‌ماند: ${fa(b)}
+        </div>
+      `;
+    }
+
+  }else{
+
+    let common=b*d;
+    let newA=a*d;
+    let newC=c*b;
+
+    resultD=common;
+
+    if(type==="add"){
+
+      resultN=newA+newC;
+
+      steps=`
+        <div class="step">
+          مخرج‌ها برابر نیستند؛ ابتدا آن‌ها را هم‌مخرج می‌کنیم.
+        </div>
+
+        <div class="step">
+          کسر اول:
+          ${frac(a,b)} = ${frac(newA,common)}
+        </div>
+
+        <div class="step">
+          کسر دوم:
+          ${frac(c,d)} = ${frac(newC,common)}
+        </div>
+
+        <div class="step">
+          حالا صورت‌ها را جمع می‌کنیم:
+          ${fa(newA)} + ${fa(newC)} = ${fa(resultN)}
+        </div>
+      `;
+
+    }else{
+
+      resultN=newA-newC;
+
+      steps=`
+        <div class="step">
+          مخرج‌ها برابر نیستند؛ ابتدا آن‌ها را هم‌مخرج می‌کنیم.
+        </div>
+
+        <div class="step">
+          کسر اول:
+          ${frac(a,b)} = ${frac(newA,common)}
+        </div>
+
+        <div class="step">
+          کسر دوم:
+          ${frac(c,d)} = ${frac(newC,common)}
+        </div>
+
+        <div class="step">
+          حالا صورت‌ها را از هم کم می‌کنیم:
+          ${fa(newA)} − ${fa(newC)} = ${fa(resultN)}
+        </div>
+      `;
+    }
+  }
+
+  let [sn,sd]=simplify(resultN,resultD);
+
+  if(sn!==resultN || sd!==resultD){
+
+    steps+=`
+      <div class="step">
+        در صورت امکان کسر را ساده می‌کنیم:
+        ${frac(resultN,resultD)} = ${frac(sn,sd)}
+      </div>
+    `;
+  }
+
+  steps+=`
+    <div class="answer">
+      پاسخ نهایی: ${frac(sn,sd)}
+    </div>
+  `;
+
+  setQuestion(
+    title,
+    `${frac(a,b)} ${symbol} ${frac(c,d)} = ؟`
+  );
+
+  makeFractionOptions(
+    [sn,sd],
+    steps,
+    [
+      [resultN+1,resultD],
+      [Math.max(1,sn-1),sd],
+      [sn,sd+1]
+    ]
   );
 }
-
-
-/* آغاز برنامه */
-
-showHome();
 
 </script>
 
