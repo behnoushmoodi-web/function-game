@@ -34,7 +34,6 @@ button{
   color:#35445c;
 }
 
-button:hover{filter:brightness(.96)}
 button:disabled{cursor:default;opacity:.85}
 
 .home-box{
@@ -247,6 +246,41 @@ button:disabled{cursor:default;opacity:.85}
   color:#718096;
 }
 
+.report-row{
+  text-align:right;
+  padding:13px;
+  margin:10px 0;
+  background:#f1f6f8;
+  border-radius:12px;
+  font-size:12px;
+  line-height:2;
+}
+
+.report-row strong{color:#315c81}
+
+.report-bar{
+  height:9px;
+  background:#e1e8eb;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:7px;
+}
+
+.report-fill{
+  height:100%;
+  background:#55a6a0;
+  border-radius:10px;
+}
+
+.report-summary{
+  background:#fff4d9;
+  padding:14px;
+  border-radius:14px;
+  margin:14px 0;
+  line-height:2.2;
+  font-size:13px;
+}
+
 @media(max-width:400px){
   body{padding:10px}
   .card{padding:14px 10px}
@@ -262,6 +296,7 @@ button:disabled{cursor:default;opacity:.85}
 <!-- صفحه اول -->
 
 <div id="homeScreen" class="home-box">
+
   <div style="font-size:36px">🧩 🔢 🎨</div>
 
   <h1>آزمایشگاه کسرها</h1>
@@ -281,10 +316,11 @@ button:disabled{cursor:default;opacity:.85}
     <br>
     گروه تخصصی آموزشگران پایه پنجم رضویه
   </div>
+
 </div>
 
 
-<!-- سربرگ صفحات بازی؛ بدون نام و مشخصات -->
+<!-- سربرگ -->
 
 <div id="gameHeader" class="header hidden">
   <div style="font-size:11px">✦ محیط تعاملی یادگیری ریاضی | پایه پنجم ✦</div>
@@ -307,7 +343,7 @@ button:disabled{cursor:default;opacity:.85}
   </div>
 
   <button class="stage-btn" onclick="startStage('compare')">
-    🔍 مقایسه کسرها (نمایش تصویری)
+    🔍 مقایسه کسرها
   </button>
 
   <button class="stage-btn" onclick="startStage('equal')">
@@ -326,9 +362,41 @@ button:disabled{cursor:default;opacity:.85}
     ➖ تفریق کسرها
   </button>
 
+  <button class="stage-btn" onclick="showReport()" style="background:#dcefeb">
+    📊 گزارش عملکرد من
+  </button>
+
+</div>
+
+
+<!-- صفحه گزارش -->
+
+<div id="reportScreen" class="card hidden">
+
+  <h2>📊 گزارش عملکرد دانش‌آموز</h2>
+
   <p class="small">
-    در هر مرحله می‌توانی به سؤال‌های جدید پاسخ بدهی و امتیاز جمع کنی.
+    این گزارش، عملکرد تو را در آزمایشگاه کسرها نشان می‌دهد.
   </p>
+
+  <div class="stats">
+    <div class="stat">⭐ امتیاز: <b id="reportScore">۰</b></div>
+    <div class="stat">📝 کل سؤال‌ها: <b id="reportTotal">۰</b></div>
+    <div class="stat">✅ پاسخ درست: <b id="reportCorrect">۰</b></div>
+  </div>
+
+  <div class="report-summary" id="overallReport"></div>
+
+  <h3 style="font-size:15px;color:#315c81">
+    عملکرد در هر مبحث
+  </h3>
+
+  <div id="stageReports"></div>
+
+  <div class="report-summary" id="recommendation"></div>
+
+  <button onclick="showMenu()">بازگشت به فهرست مراحل</button>
+
 </div>
 
 
@@ -362,6 +430,7 @@ button:disabled{cursor:default;opacity:.85}
   </div>
 
   <div class="actions">
+
     <button id="nextBtn" class="hidden" onclick="newQuestion()">
       سؤال بعدی 🔄
     </button>
@@ -371,6 +440,7 @@ button:disabled{cursor:default;opacity:.85}
     <button onclick="showMenu()" style="background:#dce8ed">
       بازگشت به فهرست مراحل
     </button>
+
   </div>
 
 </div>
@@ -378,21 +448,29 @@ button:disabled{cursor:default;opacity:.85}
 
 <script>
 
-let stage = "";
-let currentAnswer = null;
-let currentQuestion = null;
+let stage="";
+let currentAnswer=null;
+let currentQuestion=null;
 
-let score = 0;
-let correctCount = 0;
-let totalCount = 0;
-let answered = false;
+let score=0;
+let correctCount=0;
+let totalCount=0;
+let answered=false;
 
-const titles = {
-  compare:"🔍 مقایسه کسرها",
-  equal:"🟰 کسرهای مساوی",
-  simplify:"✂️ ساده کردن کسرها",
-  add:"➕ جمع کسرها",
-  subtract:"➖ تفریق کسرها"
+const stageNames={
+  compare:"مقایسه کسرها",
+  equal:"کسرهای مساوی",
+  simplify:"ساده کردن کسرها",
+  add:"جمع کسرها",
+  subtract:"تفریق کسرها"
+};
+
+const stats={
+  compare:{total:0,correct:0},
+  equal:{total:0,correct:0},
+  simplify:{total:0,correct:0},
+  add:{total:0,correct:0},
+  subtract:{total:0,correct:0}
 };
 
 function fa(n){
@@ -402,12 +480,14 @@ function fa(n){
 function gcd(a,b){
   a=Math.abs(a);
   b=Math.abs(b);
+
   while(b){
     let t=b;
     b=a%b;
     a=t;
   }
-  return a || 1;
+
+  return a||1;
 }
 
 function simplify(n,d){
@@ -427,9 +507,14 @@ function randomInt(min,max){
   return Math.floor(Math.random()*(max-min+1))+min;
 }
 
+
+// نمایش صفحات
+
 function showMenu(){
+
   document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("gameScreen").classList.add("hidden");
+  document.getElementById("reportScreen").classList.add("hidden");
 
   document.getElementById("gameHeader").classList.remove("hidden");
   document.getElementById("menuScreen").classList.remove("hidden");
@@ -437,18 +522,36 @@ function showMenu(){
   updateStats();
 }
 
+function showReport(){
+
+  document.getElementById("menuScreen").classList.add("hidden");
+  document.getElementById("gameScreen").classList.add("hidden");
+  document.getElementById("reportScreen").classList.remove("hidden");
+
+  buildReport();
+}
+
+
+// انتخاب مرحله
+
 function startStage(s){
+
   stage=s;
 
   document.getElementById("menuScreen").classList.add("hidden");
+  document.getElementById("reportScreen").classList.add("hidden");
   document.getElementById("gameScreen").classList.remove("hidden");
 
-  document.getElementById("stageTitle").textContent=titles[stage];
+  document.getElementById("stageTitle").textContent=stageNames[stage];
 
   newQuestion();
 }
 
+
+// به‌روزرسانی آمار
+
 function updateStats(){
+
   document.getElementById("score").textContent=fa(score);
   document.getElementById("correctCount").textContent=fa(correctCount);
   document.getElementById("totalCount").textContent=fa(totalCount);
@@ -457,11 +560,16 @@ function updateStats(){
   document.getElementById("menuCorrect").textContent=fa(correctCount);
   document.getElementById("menuTotal").textContent=fa(totalCount);
 
-  let progress=(totalCount%10)*10;
+  let progress=(stats[stage].total%10)*10;
+
   document.getElementById("progressFill").style.width=progress+"%";
 }
 
-function drawShape(id,n,d){
+
+// شکل تصویری کسر
+
+function drawShape(n,d){
+
   let html='<div class="shape">';
 
   for(let i=0;i<d;i++){
@@ -469,10 +577,15 @@ function drawShape(id,n,d){
   }
 
   html+='</div>';
+
   return html;
 }
 
+
+// ساخت سؤال
+
 function setQuestion(text,visual,options,answer,solution){
+
   currentAnswer=answer;
   currentQuestion={solution:solution};
 
@@ -483,11 +596,15 @@ function setQuestion(text,visual,options,answer,solution){
   box.innerHTML="";
 
   options.forEach((op,index)=>{
+
     let btn=document.createElement("button");
+
     btn.className="option";
     btn.innerHTML=op.label;
     btn.onclick=()=>finishAnswer(index);
+
     box.appendChild(btn);
+
   });
 
   document.getElementById("message").className="hidden";
@@ -501,7 +618,11 @@ function setQuestion(text,visual,options,answer,solution){
   answered=false;
 }
 
+
+// سؤال جدید
+
 function newQuestion(){
+
   updateStats();
 
   if(stage==="compare") questionCompare();
@@ -509,10 +630,11 @@ function newQuestion(){
   if(stage==="simplify") questionSimplify();
   if(stage==="add") questionArithmetic("add");
   if(stage==="subtract") questionArithmetic("subtract");
+
 }
 
 
-// مرحله اول: مقایسه کسرها
+// مقایسه کسرها
 
 function questionCompare(){
 
@@ -529,17 +651,21 @@ function questionCompare(){
 
   let visual=`
     <div class="fractions">
+
       <div class="fraction-box">
         ${fractionHTML(a,b)}
-        ${drawShape("shapeA",a,b)}
+        ${drawShape(a,b)}
         <div class="small">کسر اول</div>
       </div>
+
       <div style="font-size:20px">و</div>
+
       <div class="fraction-box">
         ${fractionHTML(c,d)}
-        ${drawShape("shapeB",c,d)}
+        ${drawShape(c,d)}
         <div class="small">کسر دوم</div>
       </div>
+
     </div>
   `;
 
@@ -566,10 +692,11 @@ function questionCompare(){
     correct,
     solution
   );
+
 }
 
 
-// مرحله دوم: کسرهای مساوی
+// کسرهای مساوی
 
 function questionEqual(){
 
@@ -588,20 +715,23 @@ function questionEqual(){
     let x,y;
 
     if(i===answerIndex){
+
       x=correctN;
       y=correctD;
+
     }else{
+
       do{
         x=randomInt(1,25);
         y=randomInt(x+1,30);
-      }while(x*d===n*y || gcd(x,y)===k);
+      }while(x*d===n*y);
 
     }
 
     options.push({
-      label:fractionHTML(x,y),
-      value:[x,y]
+      label:fractionHTML(x,y)
     });
+
   }
 
   let solution=`
@@ -622,10 +752,11 @@ function questionEqual(){
     answerIndex,
     solution
   );
+
 }
 
 
-// مرحله سوم: ساده کردن کسرها
+// ساده کردن کسرها
 
 function questionSimplify(){
 
@@ -646,16 +777,23 @@ function questionSimplify(){
     let x,y;
 
     if(i===answerIndex){
+
       x=correct[0];
       y=correct[1];
+
     }else{
+
       do{
         x=randomInt(1,12);
         y=randomInt(x+1,15);
       }while(x*correct[1]===y*correct[0]);
+
     }
 
-    options.push({label:fractionHTML(x,y)});
+    options.push({
+      label:fractionHTML(x,y)
+    });
+
   }
 
   let solution=`
@@ -667,7 +805,8 @@ function questionSimplify(){
     <br>
     ${fa(bigD)} ÷ ${fa(k)} = ${fa(correct[1])}
     <br>
-    پس ساده‌شده کسر برابر ${fractionHTML(correct[0],correct[1])} است.
+    پس ساده‌شده کسر برابر است با:
+    ${fractionHTML(correct[0],correct[1])}
   `;
 
   setQuestion(
@@ -677,10 +816,11 @@ function questionSimplify(){
     answerIndex,
     solution
   );
+
 }
 
 
-// مرحله چهارم و پنجم: جمع و تفریق
+// جمع و تفریق کسرها
 
 function questionArithmetic(type){
 
@@ -688,6 +828,7 @@ function questionArithmetic(type){
 
   b=randomInt(2,9);
   d=randomInt(2,9);
+
   a=randomInt(1,b-1);
   c=randomInt(1,d-1);
 
@@ -696,17 +837,17 @@ function questionArithmetic(type){
     [b,d]=[d,b];
   }
 
-  let numerator,denominator,common;
+  let numerator;
+  let denominator=b*d;
 
   if(type==="add"){
     numerator=a*d+c*b;
-    denominator=b*d;
   }else{
     numerator=a*d-c*b;
-    denominator=b*d;
   }
 
   let result=simplify(numerator,denominator);
+
   let rn=result[0];
   let rd=result[1];
 
@@ -718,16 +859,23 @@ function questionArithmetic(type){
     let x,y;
 
     if(i===answerIndex){
+
       x=rn;
       y=rd;
+
     }else{
+
       do{
         x=randomInt(1,20);
         y=randomInt(x,30);
       }while(x*rd===y*rn);
+
     }
 
-    options.push({label:fractionHTML(x,y)});
+    options.push({
+      label:fractionHTML(x,y)
+    });
+
   }
 
   let operation=type==="add"?"+":"−";
@@ -740,7 +888,7 @@ function questionArithmetic(type){
     <br>
     ${fa(b)} × ${fa(d)} = ${fa(b*d)}
     <br>
-    سپس صورت‌ها را با هم جمع یا از هم کم می‌کنیم:
+    سپس صورت‌ها را با هم ${operationName} می‌کنیم:
     <br>
     (${fa(a)} × ${fa(d)}) ${operation}
     (${fa(c)} × ${fa(b)})
@@ -771,21 +919,25 @@ function questionArithmetic(type){
     answerIndex,
     solution
   );
+
 }
 
 
-// بررسی پاسخ و نمایش همیشگی راه‌حل
+// بررسی پاسخ
 
 function finishAnswer(index){
 
   if(answered)return;
+
   answered=true;
 
   totalCount++;
+  stats[stage].total++;
 
   let buttons=document.querySelectorAll(".option");
 
   buttons.forEach((btn,i)=>{
+
     btn.disabled=true;
 
     if(i===currentAnswer){
@@ -795,6 +947,7 @@ function finishAnswer(index){
     if(i===index && i!==currentAnswer){
       btn.classList.add("wrong");
     }
+
   });
 
   let message=document.getElementById("message");
@@ -803,6 +956,7 @@ function finishAnswer(index){
 
     score+=10;
     correctCount++;
+    stats[stage].correct++;
 
     message.innerHTML="🌟 آفرین! پاسخ درست است. ۱۰ امتیاز گرفتی.";
     message.className="good";
@@ -811,9 +965,8 @@ function finishAnswer(index){
 
     message.innerHTML="🔎 پاسخ درست نبود؛ راه‌حل را با دقت بررسی کن.";
     message.className="bad";
-  }
 
-  // نمایش راه‌حل پس از هر پاسخ، چه درست و چه غلط
+  }
 
   document.getElementById("solutionText").innerHTML=
     currentQuestion.solution;
@@ -823,10 +976,120 @@ function finishAnswer(index){
   document.getElementById("nextBtn").classList.remove("hidden");
 
   updateStats();
+
 }
 
 
-// شروع برنامه
+// ساخت گزارش عملکرد
+
+function buildReport(){
+
+  document.getElementById("reportScore").textContent=fa(score);
+  document.getElementById("reportTotal").textContent=fa(totalCount);
+  document.getElementById("reportCorrect").textContent=fa(correctCount);
+
+  let percent=totalCount===0?0:Math.round(correctCount/totalCount*100);
+
+  document.getElementById("overallReport").innerHTML=`
+    <strong>نتیجه کلی یادگیری</strong>
+    <br>
+    میزان پاسخ‌های درست: ${fa(percent)} درصد
+    <br>
+    پاسخ‌های درست: ${fa(correctCount)} از ${fa(totalCount)}
+    <div class="report-bar">
+      <div class="report-fill" style="width:${percent}%"></div>
+    </div>
+  `;
+
+  let html="";
+
+  let weakest=null;
+  let highestWrong=-1;
+  let attempted=0;
+
+  Object.keys(stats).forEach(key=>{
+
+    let item=stats[key];
+
+    let p=item.total===0?0:Math.round(item.correct/item.total*100);
+    let wrong=item.total-item.correct;
+
+    attempted+=item.total;
+
+    if(item.total>0 && wrong>highestWrong){
+      highestWrong=wrong;
+      weakest=key;
+    }
+
+    html+=`
+      <div class="report-row">
+
+        <strong>${stageNames[key]}</strong>
+
+        <br>
+
+        تعداد سؤال: ${fa(item.total)}
+        <br>
+        پاسخ درست: ${fa(item.correct)}
+        <br>
+        پاسخ نادرست: ${fa(wrong)}
+        <br>
+        درصد موفقیت: ${fa(p)} درصد
+
+        <div class="report-bar">
+          <div class="report-fill" style="width:${p}%"></div>
+        </div>
+
+      </div>
+    `;
+
+  });
+
+  document.getElementById("stageReports").innerHTML=html;
+
+  let recommendation="";
+
+  if(attempted===0){
+
+    recommendation=`
+      هنوز به هیچ سؤالی پاسخ نداده‌ای!
+      <br>
+      یک مرحله را انتخاب کن و آزمایشگاه را شروع کن. 🌱
+    `;
+
+  }else if(weakest){
+
+    let item=stats[weakest];
+
+    if(item.total>=3){
+
+      recommendation=`
+        <strong>🎯 پیشنهاد برای تمرین بیشتر</strong>
+        <br>
+        بهتر است کمی بیشتر روی مبحث «${stageNames[weakest]}» تمرین کنی.
+        <br>
+        با تمرین بیشتر می‌توانی نتیجه بهتری بگیری!
+      `;
+
+    }else{
+
+      recommendation=`
+        <strong>🌱 ادامه بده!</strong>
+        <br>
+        برای اینکه بتوانیم نقاط قوت و نیازهای یادگیری تو را دقیق‌تر مشخص کنیم،
+        بهتر است در هر مرحله حداقل به ۳ سؤال پاسخ بدهی.
+      `;
+
+    }
+
+  }
+
+  document.getElementById("recommendation").innerHTML=recommendation;
+
+}
+
+
+// اجرای اولیه
 
 updateStats();
 
