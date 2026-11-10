@@ -30,7 +30,6 @@ button{
 }
 
 button:disabled{cursor:default}
-
 .hidden{display:none!important}
 
 .home,.header,.card{
@@ -356,11 +355,13 @@ function fraction(n,d){
 function gcd(a,b){
   a=Math.abs(a);
   b=Math.abs(b);
+
   while(b){
     let t=b;
     b=a%b;
     a=t;
   }
+
   return a||1;
 }
 
@@ -368,7 +369,12 @@ function simplify(n,d){
   let g=gcd(n,d);
   n/=g;
   d/=g;
-  if(d<0){n=-n;d=-d;}
+
+  if(d<0){
+    n=-n;
+    d=-d;
+  }
+
   return [n,d];
 }
 
@@ -377,7 +383,11 @@ function random(min,max){
 }
 
 function shuffle(arr){
-  return arr.sort(()=>Math.random()-.5);
+  for(let i=arr.length-1;i>0;i--){
+    let j=random(0,i);
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
 }
 
 function key(n,d){
@@ -387,45 +397,51 @@ function key(n,d){
 
 function drawBar(n,d){
   let html='<div class="bars">';
+
   for(let i=0;i<d;i++){
     html+=`<div class="bar ${i<n?'fill':''}"></div>`;
   }
+
   return html+'</div>';
 }
 
 
-/* ساخت گزینه‌های عددی بدون تکرار */
+/* ساخت چهار گزینه متفاوت */
 
-function makeChoices(n,d){
+function makeChoices(n,d,displayN=n,displayD=d){
 
-  let correctKey=key(n,d);
-  let correct=simplify(n,d);
+  const correctKey=key(n,d);
 
   let choices=[{
     value:correctKey,
-    label:fraction(correct[0],correct[1])
+    label:fraction(displayN,displayD)
   }];
 
   let used=new Set([correctKey]);
+  let candidates=[];
 
-  while(choices.length<4){
+  for(let y=2;y<=20;y++){
+    for(let x=0;x<=30;x++){
 
-    let x=random(1,Math.max(2,Math.abs(n)+4));
-    let y=random(2,Math.max(5,d+5));
+      let k=key(x,y);
 
-    let k=key(x,y);
+      if(used.has(k))continue;
 
-    if(used.has(k))continue;
+      used.add(k);
 
-    used.add(k);
+      candidates.push({
+        value:k,
+        label:fraction(x,y)
+      });
 
-    choices.push({
-      value:k,
-      label:fraction(x,y)
-    });
+    }
   }
 
-  return choices;
+  shuffle(candidates);
+
+  choices.push(...candidates.slice(0,3));
+
+  return shuffle(choices);
 }
 
 
@@ -448,7 +464,7 @@ const stageNames={
 };
 
 
-/* نمایش و پنهان‌کردن صفحه‌ها */
+/* نمایش صفحه‌ها */
 
 function show(id){
   document.getElementById(id).classList.remove("hidden");
@@ -481,8 +497,8 @@ function getLevel(){
   if(score>=300)return "🏆 استاد کسرها";
   if(score>=150)return "🌟 ریاضی‌دان کوچک";
   if(score>=50)return "🚀 کاوشگر پیشرفته";
-  return "🌱 کاوشگر کسرها";
 
+  return "🌱 کاوشگر کسرها";
 }
 
 function updateStats(){
@@ -493,11 +509,11 @@ function updateStats(){
 
   document.getElementById("score").innerText=fa(score);
   document.getElementById("correct").innerText=fa(correct);
-  document.getElementById("questionNo").innerText=fa(stageQuestions);
 
-  document.getElementById("levelText").innerText=
-    getLevel();
+  document.getElementById("questionNo").innerText=
+    fa(stageQuestions+1);
 
+  document.getElementById("levelText").innerText=getLevel();
 }
 
 
@@ -514,8 +530,9 @@ function startStage(s){
   document.getElementById("stageTitle").innerText=
     stageNames[stage];
 
-  newQuestion();
+  document.getElementById("progressBar").style.width="0%";
 
+  newQuestion();
 }
 
 
@@ -547,7 +564,6 @@ function setOptions(options,correctAnswer){
   document.getElementById("feedback").className="";
 
   hide("nextBtn");
-
 }
 
 
@@ -603,7 +619,6 @@ function checkAnswer(btn){
     Math.min(stageQuestions*10,100)+"%";
 
   show("nextBtn");
-
 }
 
 
@@ -624,11 +639,10 @@ function newQuestion(){
   if(stage==="subtract")questionSubtract();
 
   updateStats();
-
 }
 
 
-/* مرحله اول: مقایسه */
+/* مرحله اول: مقایسه کسرها */
 
 function questionCompare(){
 
@@ -642,7 +656,7 @@ function questionCompare(){
     a=random(1,b-1);
     c=random(1,d-1);
 
-  }while(a/b===c/d);
+  }while(a*d===c*b);
 
   document.getElementById("question").innerHTML=
     "کدام کسر بزرگ‌تر است؟";
@@ -653,13 +667,12 @@ function questionCompare(){
       <div>${fraction(c,d)}${drawBar(c,d)}</div>
     </div>`;
 
-  let answerValue=a/b>c/d?"1":"2";
+  let answerValue=a*d>c*b?"1":"2";
 
   setOptions([
     {label:"کسر اول",value:"1"},
     {label:"کسر دوم",value:"2"}
   ],answerValue);
-
 }
 
 
@@ -674,8 +687,6 @@ function questionEqual(){
   let bigN=n*k;
   let bigD=d*k;
 
-  let simplified=simplify(bigN,bigD);
-
   document.getElementById("question").innerHTML=
     `کدام کسر با ${fraction(n,d)} مساوی است؟`;
 
@@ -684,10 +695,9 @@ function questionEqual(){
     '<div style="font-size:11px;color:#777">به مقدار قسمت رنگی توجه کن.</div>';
 
   setOptions(
-    makeChoices(simplified[0],simplified[1]),
+    makeChoices(bigN,bigD,bigN,bigD),
     key(bigN,bigD)
   );
-
 }
 
 
@@ -697,21 +707,24 @@ function questionSimplify(){
 
   let n=random(1,5);
   let d=random(n+1,9);
+
+  let base=simplify(n,d);
+
+  n=base[0];
+  d=base[1];
+
   let k=random(2,5);
 
   let bigN=n*k;
   let bigD=d*k;
-
-  let correctValue=key(bigN,bigD);
 
   document.getElementById("question").innerHTML=
     `کسر زیر را تا حد امکان ساده کن: <br>${fraction(bigN,bigD)}`;
 
   setOptions(
     makeChoices(n,d),
-    correctValue
+    key(n,d)
   );
-
 }
 
 
@@ -751,7 +764,6 @@ function questionAdd(){
     makeChoices(result[0],result[1]),
     key(result[0],result[1])
   );
-
 }
 
 
@@ -767,7 +779,7 @@ function questionSubtract(){
   a=random(1,b-1);
   c=random(1,d-1);
 
-  if(a/b<c/d){
+  if(a*d<c*b){
     [a,c]=[c,a];
     [b,d]=[d,b];
   }
@@ -784,7 +796,6 @@ function questionSubtract(){
     makeChoices(result[0],result[1]),
     key(result[0],result[1])
   );
-
 }
 
 
