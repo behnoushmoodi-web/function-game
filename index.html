@@ -1,29 +1,87 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>آزمایشگاه کسرها</title>
 
 <style>
+
 body {
   font-family: Tahoma, sans-serif;
   background: #fff8e9;
   text-align: center;
-  padding: 20px;
+  padding: 15px;
   color: #35445c;
   margin: 0;
 }
 
-h1 {
-  color: #315c81;
+/* صفحه شروع */
+
+.home-box {
+  background: linear-gradient(135deg,#315c81,#55a6a0);
+  color: white;
+  padding: 45px 20px;
+  border-radius: 24px;
+  max-width: 500px;
+  margin: 80px auto;
+  box-shadow: 0 8px 25px #b9cbd0;
 }
+
+.home-box h1 {
+  color: white;
+  font-size: 23px;
+  margin: 10px 0 25px;
+}
+
+/* سربرگ بازی */
+
+.game-header {
+  background: linear-gradient(135deg,#315c81,#55a6a0);
+  color: white;
+  padding: 15px 12px 8px;
+  border-radius: 20px;
+  max-width: 500px;
+  margin: 15px auto 20px;
+  box-shadow: 0 8px 25px #b9cbd0;
+}
+
+.game-header .small-title {
+  font-size: 9px;
+  opacity: .9;
+}
+
+.game-header h1 {
+  color: white;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.game-header .description {
+  font-size: 10px;
+  margin: 5px 0;
+}
+
+.game-header .emoji {
+  font-size: 15px;
+  margin: 5px 0;
+}
+
+.signature {
+  font-size: 8px;
+  line-height: 1.8;
+  margin-top: 8px;
+}
+
+/* کارت بازی */
 
 .card {
   background: white;
   border-radius: 20px;
-  padding: 20px;
-  margin: 20px auto;
+  padding: 20px 10px;
+  margin: 15px auto;
   max-width: 500px;
   box-shadow: 0 4px 15px #ddd;
 }
@@ -31,30 +89,31 @@ h1 {
 .fractions {
   display: flex;
   justify-content: space-around;
-  gap: 15px;
+  gap: 10px;
 }
 
 .fraction {
   background: #f0f5fa;
   border-radius: 15px;
-  padding: 15px;
-  width: 40%;
+  padding: 12px 5px;
+  width: 45%;
 }
 
 .number {
-  font-size: 25px;
+  font-size: 23px;
   font-weight: bold;
 }
 
 button {
   border: none;
   border-radius: 12px;
-  padding: 12px 20px;
+  padding: 11px 17px;
   margin: 8px;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   background: #e5b85c;
   color: #333;
+  font-family: Tahoma, sans-serif;
 }
 
 button:hover {
@@ -79,86 +138,51 @@ button:hover {
 }
 
 #message {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   margin: 15px;
+  min-height: 25px;
 }
 
-.home-box {
-  background: linear-gradient(135deg,#315c81,#55a6a0);
-  color: white;
-  padding: 35px 18px;
-  border-radius: 22px;
-  max-width: 500px;
-  margin: 65px auto;
-  box-shadow: 0 6px 20px #b9cbd0;
+.home-button {
+  background: #dce9ef;
+  font-size: 12px;
 }
 
-.home-box h1 {
-  color: white;
-  font-size: 22px;
-}
-
-.home-box p {
-  font-size: 13px;
-  line-height: 2.2;
-}
-
-#gameHeader {
-  background: linear-gradient(135deg,#315c81,#55a6a0);
-  color: white;
-  padding: 14px 12px;
-  border-radius: 20px;
-  max-width: 650px;
-  margin: 10px auto 18px;
-  box-shadow: 0 5px 16px #b9cbd0;
-}
+/* نمایش در گوشی */
 
 @media (max-width: 400px) {
   body {
-    padding: 12px;
-  }
-
-  .fraction {
     padding: 10px;
   }
 
+  .card {
+    padding: 15px 5px;
+  }
+
+  .number {
+    font-size: 21px;
+  }
+
   button {
+    font-size: 13px;
     padding: 10px 12px;
-    font-size: 14px;
   }
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- صفحه شروع -->
+<!-- صفحه اصلی -->
 
 <div id="homeScreen" class="home-box">
 
-  <div style="font-size:35px;margin-bottom:15px;">
-    🧩 🔢 🎨
-  </div>
+  <h1>آزمایشگاه کسرها</h1>
 
-  <h1>
-    آزمایشگاه کسرها
-  </h1>
-
-  <p>
-    به دنیای شگفت‌انگیز کسرها خوش آمدی!
-    <br>
-    اینجا با بازی و تجربه، ریاضی را کشف می‌کنیم.
-  </p>
-
-  <button onclick="showGame()" style="
-  background:#e5b85c;
-  padding:12px 28px;
-  border-radius:12px;
-  font-size:15px;
-  font-weight:bold;
-  ">
-    شروع یادگیری 🚀
+  <button onclick="showGame()">
+    شروع بازی 🚀
   </button>
 
 </div>
@@ -166,75 +190,78 @@ button:hover {
 
 <!-- سربرگ بازی -->
 
-<div id="gameHeader" style="display:none;">
+<div id="gameHeader" class="game-header" style="display:none;">
 
-  <div style="font-size:9px;opacity:.85;">
+  <div class="small-title">
     ✦ محیط تعاملی یادگیری ریاضی | پایه پنجم ✦
   </div>
 
-  <h1 style="color:white;font-size:16px;margin:8px 0;">
-    آزمایشگاه کسرها
-  </h1>
+  <h1>آزمایشگاه کسرها</h1>
 
-  <p style="font-size:10px;line-height:1.7;margin:4px 0;">
+  <div class="description">
     کشف دنیای کسرها با بازی، تجربه و تفکر
-  </p>
+  </div>
 
-  <div style="font-size:15px;margin-top:4px;">
+  <div class="emoji">
     🧩 🔢 🎨
   </div>
 
-  <div style="
-  font-size:8px;
-  line-height:1.8;
-  opacity:.75;
-  margin-top:9px;
-  padding-top:6px;
-  border-top:1px solid rgba(255,255,255,.25);
-  ">
-    بهنوش مودی
-    <br>
+  <div class="signature">
+    بهنوش مودی<br>
     گروه تخصصی آموزگاران پایه پنجم رضویه
   </div>
 
 </div>
 
 
-<!-- بخش بازی -->
+<!-- محیط بازی -->
 
-<div class="card" id="gameScreen" style="display:none;">
+<div id="gameScreen" style="display:none;">
 
-  <div class="fractions">
+  <div class="card">
 
-    <div class="fraction">
-      <div id="fraction1" class="number"></div>
-      <div id="shape1" class="shape"></div>
-      <button onclick="check(1)">کسر اول</button>
+    <div class="fractions">
+
+      <div class="fraction">
+
+        <div id="fraction1" class="number"></div>
+
+        <div id="shape1" class="shape"></div>
+
+        <button onclick="check(1)">
+          کسر اول
+        </button>
+
+      </div>
+
+
+      <div class="fraction">
+
+        <div id="fraction2" class="number"></div>
+
+        <div id="shape2" class="shape"></div>
+
+        <button onclick="check(2)">
+          کسر دوم
+        </button>
+
+      </div>
+
     </div>
 
-    <div class="fraction">
-      <div id="fraction2" class="number"></div>
-      <div id="shape2" class="shape"></div>
-      <button onclick="check(2)">کسر دوم</button>
-    </div>
+    <div id="message"></div>
+
+    <button onclick="newQuestion()">
+      سؤال بعدی 🔄
+    </button>
+
+    <br>
+
+    <button class="home-button" onclick="showHome()">
+      بازگشت به صفحه اصلی
+    </button>
 
   </div>
-
-  <div id="message"></div>
-
-  <button onclick="newQuestion()">
-    سؤال بعدی 🔄
-  </button>
-
-  <br>
-
-  <button onclick="showHome()" style="
-  background:#d9e3ed;
-  color:#35445c;
-  font-size:13px;
-  ">
-    بازگشت به صفحه اصلی
-  </button>
 
 </div>
 
@@ -244,61 +271,54 @@ button:hover {
 let a, b, c, d;
 
 
-// نمایش صفحه بازی
-
-function showGame() {
-  document.getElementById("homeScreen").style.display = "none";
-  document.getElementById("gameHeader").style.display = "block";
-  document.getElementById("gameScreen").style.display = "block";
-
-  newQuestion();
-}
-
-
-// بازگشت به صفحه اصلی
-
-function showHome() {
-  document.getElementById("homeScreen").style.display = "block";
-  document.getElementById("gameHeader").style.display = "none";
-  document.getElementById("gameScreen").style.display = "none";
-}
-
-
-// تولید کسر تصادفی
+/* ساخت کسر تصادفی */
 
 function makeFraction() {
+
   let denominator = Math.floor(Math.random() * 7) + 3;
-  let numerator = Math.floor(Math.random() * (denominator - 1)) + 1;
+
+  let numerator = Math.floor(
+    Math.random() * (denominator - 1)
+  ) + 1;
 
   return [numerator, denominator];
+
 }
 
 
-// رسم شکل کسر
+/* رسم شکل کسر */
 
 function drawShape(id, n, d) {
+
   let box = document.getElementById(id);
+
   box.innerHTML = "";
 
   for(let i = 0; i < d; i++) {
+
     let part = document.createElement("div");
 
     part.className = "part" + (i < n ? " filled" : "");
 
     box.appendChild(part);
+
   }
+
 }
 
 
-// ساخت سؤال جدید
+/* تولید سؤال جدید */
 
 function newQuestion() {
 
   do {
+
     [a,b] = makeFraction();
+
     [c,d] = makeFraction();
 
-  } while(a * d === c * b);
+  } while(a/b === c/d);
+
 
   document.getElementById("fraction1").innerHTML =
     a + "<hr>" + b;
@@ -306,23 +326,56 @@ function newQuestion() {
   document.getElementById("fraction2").innerHTML =
     c + "<hr>" + d;
 
+
   drawShape("shape1", a, b);
+
   drawShape("shape2", c, d);
 
+
   document.getElementById("message").innerHTML = "";
+
 }
 
 
-// بررسی پاسخ
+/* بررسی پاسخ */
 
 function check(choice) {
 
   let correct = a/b > c/d ? 1 : 2;
 
   document.getElementById("message").innerHTML =
+
     choice === correct
     ? "🌟 آفرین! پاسخ درست است."
     : "دوباره فکر کن! پاسخ درست نیست.";
+
+}
+
+
+/* ورود به بازی */
+
+function showGame() {
+
+  document.getElementById("homeScreen").style.display = "none";
+
+  document.getElementById("gameHeader").style.display = "block";
+
+  document.getElementById("gameScreen").style.display = "block";
+
+  newQuestion();
+
+}
+
+
+/* بازگشت به صفحه اصلی */
+
+function showHome() {
+
+  document.getElementById("homeScreen").style.display = "block";
+
+  document.getElementById("gameHeader").style.display = "none";
+
+  document.getElementById("gameScreen").style.display = "none";
 
 }
 
