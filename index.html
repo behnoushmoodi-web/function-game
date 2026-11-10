@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>بازی مقایسه کسرها</title>
+<title>آزمایشگاه کسرها</title>
+
 <style>
 body {
   font-family: Tahoma, sans-serif;
@@ -12,7 +13,11 @@ body {
   padding: 20px;
   color: #35445c;
 }
-h1 { color: #315c81; }
+
+h1 {
+  color: #315c81;
+}
+
 .card {
   background: white;
   border-radius: 20px;
@@ -21,21 +26,25 @@ h1 { color: #315c81; }
   max-width: 500px;
   box-shadow: 0 4px 15px #ddd;
 }
+
 .fractions {
   display: flex;
   justify-content: space-around;
   gap: 15px;
 }
+
 .fraction {
   background: #f0f5fa;
   border-radius: 15px;
   padding: 15px;
   width: 40%;
 }
+
 .number {
   font-size: 25px;
   font-weight: bold;
 }
+
 button {
   border: none;
   border-radius: 12px;
@@ -46,19 +55,28 @@ button {
   background: #e5b85c;
   color: #333;
 }
-button:hover { background: #f0ce85; }
+
+button:hover {
+  background: #f0ce85;
+}
+
 .shape {
   display: flex;
   height: 35px;
   margin: 15px auto;
   direction: ltr;
 }
+
 .part {
   border: 1px solid white;
   background: #d9e3ed;
   flex: 1;
 }
-.filled { background: #55a6a0; }
+
+.filled {
+  background: #55a6a0;
+}
+
 #message {
   font-size: 20px;
   font-weight: bold;
@@ -66,49 +84,66 @@ button:hover { background: #f0ce85; }
 }
 </style>
 </head>
+
 <body>
+
+<!-- سربرگ آزمایشگاه -->
 
 <div style="
 background:linear-gradient(135deg,#315c81,#55a6a0);
 color:white;
-padding:35px 18px;
+padding:28px 18px;
 border-radius:24px;
 max-width:650px;
 margin:20px auto 30px;
 box-shadow:0 8px 25px #b9cbd0;
 ">
-  <div style="font-size:15px;opacity:.9;">
+
+  <div style="font-size:13px;opacity:.9;">
     ✦ محیط تعاملی یادگیری ریاضی | پایه پنجم ✦
   </div>
 
-  <h1 style="color:white;font-size:30px;margin:18px 0;">
+  <h1 style="color:white;font-size:24px;margin:14px 0;">
     آزمایشگاه کسرها
   </h1>
 
-  <p style="font-size:16px;line-height:2;">
+  <p style="font-size:14px;line-height:2;margin:8px 0;">
     کشف دنیای کسرها با بازی، تجربه و تفکر
   </p>
 
-  <div style="font-size:28px;margin-top:12px;">
+  <div style="font-size:23px;margin-top:10px;">
     🧩 🔢 🎨
   </div>
+
 </div>
+
+<!-- بخش بازی -->
+
 <div class="card">
+
   <div class="fractions">
+
     <div class="fraction">
       <div id="fraction1" class="number"></div>
       <div id="shape1" class="shape"></div>
       <button onclick="check(1)">کسر اول</button>
     </div>
+
     <div class="fraction">
       <div id="fraction2" class="number"></div>
       <div id="shape2" class="shape"></div>
       <button onclick="check(2)">کسر دوم</button>
     </div>
+
   </div>
+
   <div id="message"></div>
+
   <button onclick="newQuestion()">سؤال بعدی 🔄</button>
+
 </div>
+
+<!-- بخش برنامه بازی -->
 
 <script>
 let a, b, c, d;
@@ -122,6 +157,7 @@ function makeFraction() {
 function drawShape(id, n, d) {
   let box = document.getElementById(id);
   box.innerHTML = "";
+
   for(let i = 0; i < d; i++) {
     let part = document.createElement("div");
     part.className = "part" + (i < n ? " filled" : "");
@@ -146,13 +182,27 @@ function newQuestion() {
 
 function check(choice) {
   let correct = a/b > c/d ? 1 : 2;
+
   document.getElementById("message").innerHTML =
-    choice === correct ? "🌟 آفرین! پاسخ درست است." : "دوباره فکر کن! پاسخ درست نیست.";
+    choice === correct
+    ? "🌟 آفرین! پاسخ درست است."
+    : "دوباره فکر کن! پاسخ درست نیست.";
 }
 
 newQuestion();
 </script>
-<footer style="text-align:center; padding:14px 10px; margin-top:20px; color:#718096; font-family:Tahoma,sans-serif; font-size:11px; line-height:1.8;">
+
+<!-- امضای سازنده -->
+
+<footer style="
+text-align:center;
+padding:14px 10px;
+margin-top:20px;
+color:#718096;
+font-family:Tahoma,sans-serif;
+font-size:11px;
+line-height:1.8;
+">
   بهنوش مودی
   <br>
   گروه تخصصی آموزگاران پایه پنجم رضویه
