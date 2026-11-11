@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>آزمایشگاه کسرها</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Tahoma,sans-serif;
+ background:#edf6f1;
+ color:#20384a;
+}
+.container{max-width:850px;margin:auto;padding:15px}
+header{
+ background:#173b57;color:white;text-align:center;
+ padding:25px 12px;border-radius:22px;
+ box-shadow:0 6px 0 #102c42;
+}
+header h1{margin:8px 0;font-size:26px}
+header p{margin:5px;font-size:14px}
+.panel{
+ background:white;border-radius:20px;
+ padding:18px;margin-top:18px;
+ box-shadow:0 4px 0 #dce9e2;
+}
+input{
+ width:100%;padding:13px;border:2px solid #dce9e2;
+ border-radius:12px;font-size:16px;margin:10px 0;
+}
+button{
+ border:0;border-radius:12px;padding:12px 17px;
+ font-size:15px;font-weight:bold;cursor:pointer;
+}
+.primary{background:#276b83;color:white}
+.gold{background:#f4bd4e;color:#493611}
+.map{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+ gap:12px;margin-top:15px;
+}
+.zone{
+ background:#f7fbf8;border:2px solid #dce9e2;
+ border-radius:17px;padding:16px 8px;
+ text-align:center;min-height:135px;
+}
+.zone .icon{font-size:35px}
+.zone strong{display:block;margin:8px 0}
+.zone small{color:#71838a}
+.zone:disabled{opacity:.4;filter:grayscale(1)}
+.stats{display:flex;gap:10px;margin-top:15px}
+.stat{
+ flex:1;background:#f0f7f3;border-radius:13px;
+ text-align:center;padding:12px;font-size:13px;
+}
+.stat b{display:block;font-size:20px;margin-top:6px}
+.question{text-align:center;font-size:19px;line-height:2;margin:20px 0}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.answer{
+ background:#edf5f1;color:#173b57;
+ border:2px solid #dce9e2;padding:16px;
+}
+.feedback{
+ margin-top:15px;padding:14px;border-radius:13px;
+ line-height:2;
+}
+.correct{background:#e6f8ec}
+.wrong{background:#fff0e9}
+.hidden{display:none}
+footer{text-align:center;font-size:12px;color:#71838a;margin:25px 0}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+ <div>🎮 ماجراجویی ریاضی پایه پنجم</div>
+ <h1>🧪 آزمایشگاه کسرها</h1>
+ <p>مأموریت نجات سرزمین کسرها</p>
+</header>
+
+<section class="panel" id="home">
+ <h2>سلام قهرمان! 👋</h2>
+ <p>نامت را بنویس و برای فتح سرزمین کسرها آماده شو.</p>
+ <input id="student" placeholder="نام دانش‌آموز">
+ <button class="primary" onclick="start()">ورود به بازی</button>
+
+ <div class="stats">
+  <div class="stat">⭐ امتیاز<b id="score">۰</b></div>
+  <div class="stat">🏅 مناطق فتح‌شده<b id="completed">۰ از ۵</b></div>
+ </div>
+
+ <h3 style="margin-top:25px">🗺️ نقشه مأموریت‌ها</h3>
+ <div class="map" id="map"></div>
+</section>
+
+<section class="panel hidden" id="game">
+ <button onclick="back()" class="gold">← بازگشت به نقشه</button>
+ <h2 id="zoneTitle"></h2>
+ <div class="stats">
+  <div class="stat">❤️ جان<b id="hearts">۳</b></div>
+  <div class="stat">⭐ امتیاز<b id="points">۰</b></div>
+  <div class="stat">سؤال<b id="number">۱ از ۵</b></div>
+ </div>
+
+ <div class="question" id="question"></div>
+ <div class="answers" id="answers"></div>
+ <div id="feedback" class="feedback hidden"></div>
+ <button id="next" class="primary hidden" onclick="next()">ادامه مأموریت ←</button>
+</section>
+
+<footer>
+ طراحی آموزشی: بهنوش مودی<br>
+ گروه تخصصی آموزشگران پایه پنجم رضویه
+</footer>
+</div>
+
+<script>
+const missions=[
+{
+ name:"دره مقایسه",icon:"🏞️",
+ questions:[
+ ["کدام کسر بزرگ‌تر است؟",["۱/۲","۱/۳"],0,"وقتی صورت‌ها برابر باشند، کسری که مخرج کوچک‌تری دارد بزرگ‌تر است."],
+ ["کدام کسر کوچک‌تر است؟",["۳/۵","۴/۵"],0,"وقتی مخرج‌ها برابرند، صورت کوچک‌تر نشان‌دهنده کسر کوچک‌تر است."],
+ ["کدام کسر بزرگ‌تر است؟",["۲/۳","۳/۴"],1,"۲/۳ برابر ۸/۱۲ و ۳/۴ برابر ۹/۱۲ است."],
+ ["کدام کسر با یک برابر است؟",["۵/۶","۶/۶"],1,"وقتی صورت و مخرج برابر باشند، کسر برابر یک است."],
+ ["کدام کسر بزرگ‌تر است؟",["۵/۸","۱/۲"],0,"۱/۲ برابر ۴/۸ است؛ پس ۵/۸ بزرگ‌تر است."]
+ ]
+},
+{
+ name:"جزیره آینه‌ها",icon:"🪞",
+ questions:[
+ ["کدام کسر با ۱/۲ مساوی است؟",["۲/۴","۲/۳"],0,"صورت و مخرج را در ۲ ضرب می‌کنیم."],
+ ["۳/۵ برابر چند دهم است؟",["۵/۱۰","۶/۱۰"],1,"صورت و مخرج را در ۲ ضرب می‌کنیم."],
+ ["کدام کسر با ۲/۳ برابر است؟",["۴/۶","۴/۵"],0,"صورت و مخرج را در ۲ ضرب می‌کنیم."],
+ ["۴/۸ با کدام کسر مساوی است؟",["۱/۴","۱/۲"],1,"صورت و مخرج را بر ۴ تقسیم می‌کنیم."],
+ ["۲/۷ برابر چند بیست‌ویکم است؟",["۶/۲۱","۴/۲۱"],0,"صورت و مخرج را در ۳ ضرب می‌کنیم."]
+ ]
+},
+{
+ name:"غار اسرارآمیز",icon:"🗝️",
+ questions:[
+ ["ساده‌شده ۲/۴ کدام است؟",["۱/۲","۱/۴"],0,"صورت و مخرج را بر ۲ تقسیم می‌کنیم."],
+ ["ساده‌شده ۶/۹ کدام است؟",["۲/۳","۳/۲"],0,"صورت و مخرج را بر ۳ تقسیم می‌کنیم."],
+ ["ساده‌شده ۸/۱۲ کدام است؟",["۳/۴","۲/۳"],1,"صورت و مخرج را بر ۴ تقسیم می‌کنیم."],
+ ["ساده‌شده ۱۰/۱۵ کدام است؟",["۲/۳","۱/۳"],0,"صورت و مخرج را بر ۵ تقسیم می‌کنیم."],
+ ["ساده‌شده ۱۲/۱۸ کدام است؟",["۲/۳","۴/۹"],0,"صورت و مخرج را بر ۶ تقسیم می‌کنیم."]
+ ]
+},
+{
+ name:"پل جمع",icon:"🌉",
+ questions:[
+ ["۱/۵ + ۲/۵ = ؟",["۳/۵","۳/۱۰"],0,"مخرج‌ها برابرند؛ صورت‌ها را جمع می‌کنیم."],
+ ["۲/۷ + ۳/۷ = ؟",["۵/۷","۵/۱۴"],0,"۲+۳=۵ و مخرج ۷ باقی می‌ماند."],
+ ["۱/۲ + ۱/۴ = ؟",["۲/۶","۳/۴"],1,"۱/۲ را به ۲/۴ تبدیل می‌کنیم."],
+ ["۱/۳ + ۱/۶ = ؟",["۱/۲","۲/۹"],0,"۱/۳ برابر ۲/۶ است؛ حاصل ۳/۶ یا ۱/۲ است."],
+ ["۲/۵ + ۱/۱۰ = ؟",["۳/۱۵","۵/۱۰"],1,"۲/۵ برابر ۴/۱۰ است؛ حاصل ۵/۱۰ می‌شود."]
+ ]
+},
+{
+ name:"قلعه تفریق",icon:"🏰",
+ questions:[
+ ["۳/۵ − ۱/۵ = ؟",["۲/۵","۲/۰"],0,"مخرج‌ها برابرند؛ صورت‌ها را کم می‌کنیم."],
+ ["۶/۸ − ۲/۸ = ؟",["۴/۸","۴/۰"],0,"۶ منهای ۲ برابر ۴ است."],
+ ["۳/۴ − ۱/۴ = ؟",["۲/۴","۲/۸"],0,"۳ منهای ۱ برابر ۲ است."],
+ ["۱ − ۱/۳ = ؟",["۱/۳","۲/۳"],1,"یک را به ۳/۳ تبدیل می‌کنیم."],
+ ["۵/۶ − ۱/۳ = ؟",["۴/۳","۱/۲"],1,"۱/۳ برابر ۲/۶ است؛ حاصل ۳/۶ یا ۱/۲ است."]
+ ]
+}
+];
+
+let student="",score=0,hearts=3,current=0,index=0,earned=0;
+let done=JSON.parse(localStorage.getItem("fractionDone")||"[]");
+
+function fa(n){return String(n).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d])}
+
+function start(){
+ student=document.getElementById("student").value.trim();
+ if(!student){alert("اول نامت را بنویس!");return}
+ document.getElementById("home").classList.remove("hidden");
+ renderMap();
+}
+
+function renderMap(){
+ document.getElementById("score").textContent=fa(score);
+ document.getElementById("completed").textContent=fa(done.length)+" از ۵";
+ let map=document.getElementById("map");
+ map.innerHTML="";
+ missions.forEach((m,i)=>{
+ let unlocked=i===0||done.includes(i-1);
+ let b=document.createElement("button");
+ b.className="zone";
+ b.disabled=!unlocked;
+ b.innerHTML=`<div class="icon">${done.includes(i)?"🏅":m.icon}</div><strong>${m.name}</strong><small>${done.includes(i)?"فتح شده":unlocked?"ورود به مأموریت":"🔒 قفل است"}</small>`;
+ b.onclick=()=>openMission(i);
+ map.appendChild(b);
+ });
+}
+
+function openMission(i){
+ current=i;index=0;hearts=3;earned=0;
+ document.getElementById("home").classList.add("hidden");
+ document.getElementById("game").classList.remove("hidden");
+ document.getElementById("zoneTitle").textContent=missions[i].icon+" "+missions[i].name;
+ showQuestion();
+}
+
+function showQuestion(){
+ let q=missions[current].questions[index];
+ document.getElementById("question").textContent=q[0];
+ document.getElementById("number").textContent=fa(index+1)+" از ۵";
+ document.getElementById("hearts").textContent="❤️".repeat(hearts)+"🤍".repeat(3-hearts);
+ document.getElementById("points").textContent=fa(earned);
+ document.getElementById("feedback").classList.add("hidden");
+ document.getElementById("next").classList.add("hidden");
+
+ let box=document.getElementById("answers");
+ box.innerHTML="";
+ q[1].forEach((answer,j)=>{
+ let b=document.createElement("button");
+ b.className="answer";
+ b.textContent=answer;
+ b.onclick=()=>check(j);
+ box.appendChild(b);
+ });
+}
+
+function check(choice){
+ let q=missions[current].questions[index];
+ let correct=choice===q[2];
+ let feedback=document.getElementById("feedback");
+ feedback.className="feedback "+(correct?"correct":"wrong");
+ if(correct){
+ score+=10;earned+=10;
+ feedback.innerHTML="✅ آفرین! پاسخ درست است.<br><b>راه‌حل:</b> "+q[3];
+ }else{
+ hearts--;
+ feedback.innerHTML="❌ این بار درست نبود!<br><b>پاسخ درست:</b> "+q[1][q[2]]+"<br><b>راه‌حل:</b> "+q[3];
+ }
+ document.querySelectorAll(".answer").forEach(b=>b.disabled=true);
+ document.getElementById("hearts").textContent="❤️".repeat(hearts)+"🤍".repeat(3-hearts);
+ document.getElementById("points").textContent=fa(earned);
+ document.getElementById("next").classList.remove("hidden");
+ document.getElementById("next").textContent=(hearts===0||index===4)?"پایان مأموریت":"سؤال بعدی ←";
+}
+
+function next(){
+ if(hearts===0||index===4){
+ if(hearts>0&&!done.includes(current)){
+ done.push(current);
+ localStorage.setItem("fractionDone",JSON.stringify(done));
+ }
+ alert(hearts>0?"🎉 آفرین "+student+"! مأموریت را فتح کردی.":"💪 تلاش خوبی بود! می‌توانی دوباره امتحان کنی.");
+ back();
+ return;
+ }
+ index++;
+ showQuestion();
+}
+
+function back(){
+ document.getElementById("game").classList.add("hidden");
+ document.getElementById("home").classList.remove("hidden");
+ renderMap();
+}
+renderMap();
+</script>
+</body>
+</html>
